@@ -22,7 +22,7 @@ public class Person {
     private String photoUrl;
 
     @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
+    @JoinColumn(name = "person_role_id", nullable = false)
     private Role role;
 
     @CreationTimestamp

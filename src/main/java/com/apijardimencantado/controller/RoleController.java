@@ -7,6 +7,8 @@ import com.apijardimencantado.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,20 +21,15 @@ public class RoleController implements RoleContract {
 
     private final RoleService roleService;
 
+    @GetMapping
+    @Override
     public ResponseEntity<List<RoleResponse>> getAll() {
         return ResponseEntity.ok(roleService.getAll());
     }
 
-    public ResponseEntity<RoleResponse> getById(Long id) {
+    @GetMapping("/{id}")
+    @Override
+    public ResponseEntity<RoleResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(roleService.getById(id));
-    }
-
-    public ResponseEntity<RoleResponse> create(RoleRequest request) {
-        RoleResponse response = roleService.create(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
-
-    public ResponseEntity<RoleResponse> update(Long id, RoleRequest request) {
-        return ResponseEntity.ok(roleService.update(id, request));
     }
 }

@@ -4,5 +4,6 @@ public record PersonResponse(
         Long id,
         String firstName,
         String photoUrl,
-        String roleName
+        String roleName,
+        AddressResponse address
 ) {}
