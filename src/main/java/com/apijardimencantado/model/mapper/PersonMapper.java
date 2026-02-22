@@ -12,7 +12,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = AddressMapper.class)
 public interface PersonMapper {
     @Mapping(target = "id", ignore = true)
-    @Mapping(source = "roleId", target = "role.id")
     Person toEntity(PersonRequest request);
 
     @Mapping(source = "role.name", target = "roleName")
