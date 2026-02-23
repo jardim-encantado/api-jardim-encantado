@@ -30,5 +30,8 @@ public record PersonRequest (
     String photoUrl,
 
     @NotBlank
-    String roleName
+    Long roleId,
+
+    @NotBlank
+    AddressRequest address
 ){}

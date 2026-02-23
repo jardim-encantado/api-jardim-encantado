@@ -1,6 +1,6 @@
 spring:
   application:
-    name: iara-api
+    name: api-jardim-encantado
 
   datasource:
     url: ${DB_URL}
