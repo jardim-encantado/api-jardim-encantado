@@ -1,5 +1,6 @@
-package com.apijardimencantado.model.database;
+package com.apijardimencantado.model.database.student;
 
+import com.apijardimencantado.model.database.Person;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,4 +16,8 @@ public class Student {
     @OneToOne
     @JoinColumn(name = "person_id", nullable = false)
     private Person person;
+
+    @OneToOne
+    @JoinColumn(name = "enrollment_id", nullable = false)
+    private Enrollment enrollment;
 }
