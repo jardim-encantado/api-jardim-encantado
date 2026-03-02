@@ -1,4 +1,4 @@
-package com.apijardimencantado.model.database.student;
+package com.apijardimencantado.model.database.enrollment;
 import com.apijardimencantado.util.GenericEnumConverter;
 import com.apijardimencantado.util.ValuedEnum;
 import jakarta.persistence.Converter;
@@ -23,6 +23,16 @@ public enum EnrollmentStatus implements ValuedEnum<Integer> {
 
         protected Convert(Class<EnrollmentStatus> enumClass) {
             super(enumClass);
+        }
+    }
+
+    public record Adapter(EnrollmentStatus status) {
+        public EnrollmentState toState() {
+            return switch (status) {
+                case PRE_ENROLLMENT -> new EnrollmentPreState();
+                case ENROLLED -> new EnrollmentFinishedState();
+                case REJECTED -> new EnrollmentRejectedState();
+            };
         }
     }
 }

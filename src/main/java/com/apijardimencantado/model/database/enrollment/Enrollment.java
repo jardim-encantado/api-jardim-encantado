@@ -1,4 +1,4 @@
-package com.apijardimencantado.model.database.student;
+package com.apijardimencantado.model.database.enrollment;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,10 +22,6 @@ public class Enrollment {
     @Column(name = "enrollment_id")
     private Long id;
 
-    @Builder.Default
-    @Convert(converter = EnrollmentStatus.Convert.class)
-    private EnrollmentStatus status = EnrollmentStatus.PRE_ENROLLMENT;
-
     private LocalDateTime enrollment_date;
 
     @CreationTimestamp
@@ -33,4 +29,24 @@ public class Enrollment {
     @UpdateTimestamp
     private LocalDateTime update_date;
 
+    @Builder.Default
+    @Convert(converter = EnrollmentStatus.Convert.class)
+    private EnrollmentStatus status = EnrollmentStatus.PRE_ENROLLMENT;
+
+    @Transient
+    private transient EnrollmentState state = null;
+
+    private EnrollmentState getState() {
+        return new EnrollmentStatus.Adapter(status).toState();
+    }
+
+    public void finish() {
+        this.state = this.getState().finish();
+        this.status = this.state.getStatus();
+    }
+
+    public void reject() {
+        this.state = this.getState().reject();
+        this.status = this.state.getStatus();
+    }
 }

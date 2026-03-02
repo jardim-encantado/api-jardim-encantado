@@ -1,6 +1,6 @@
-package com.apijardimencantado.model.database.student;
+package com.apijardimencantado.model.database;
 
-import com.apijardimencantado.model.database.Person;
+import com.apijardimencantado.model.database.enrollment.Enrollment;
 import jakarta.persistence.*;
 import lombok.Data;
 

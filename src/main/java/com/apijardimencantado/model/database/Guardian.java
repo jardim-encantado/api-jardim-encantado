@@ -1,6 +1,5 @@
 package com.apijardimencantado.model.database;
 
-import com.apijardimencantado.model.database.student.Student;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
