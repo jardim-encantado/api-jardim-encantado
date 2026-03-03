@@ -18,10 +18,6 @@ public interface StudentContract {
     @ResponseStatus(HttpStatus.CREATED)
     StudentResponse createStudent(StudentRequest request);
 
-    @PostMapping("/students/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    StudentResponse updateStudent(@PathVariable Long id, StudentRequest request);
-
     @PatchMapping("/students/{studentId}/enrollment/finish")
     @ResponseStatus(HttpStatus.OK)
     StudentResponse finishEnrollment(@PathVariable Long studentId);

@@ -5,7 +5,6 @@ import com.apijardimencantado.model.dto.request.StudentRequest;
 import com.apijardimencantado.model.dto.response.StudentResponse;
 import com.apijardimencantado.service.StudentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,11 +19,6 @@ public class StudentController implements StudentContract {
     @Override
     public StudentResponse createStudent(@RequestBody StudentRequest request) {
         return studentService.create(request);
-    }
-
-    @Override
-    public StudentResponse updateStudent(@PathVariable Long id, @RequestBody StudentRequest request) {
-        return studentService.update(id, request);
     }
 
     @Override

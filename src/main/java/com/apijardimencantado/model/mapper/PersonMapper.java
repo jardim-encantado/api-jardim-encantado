@@ -16,5 +16,4 @@ public interface PersonMapper {
 
     @Mapping(source = "role.name", target = "roleName")
     PersonResponse toResponse(Person person);
-
 }
