@@ -9,11 +9,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Tag(name = "Guardian Controller", description = "Endpoints to manage legal guardians")
+@Validated
 public interface GuardianContract {
     @Operation(
             summary = "Create a new person",
@@ -29,6 +31,7 @@ public interface GuardianContract {
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content),
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content)
     })
+    @PostMapping
     @ResponseStatus(HttpStatus.OK)
     GuardianResponse create(GuardianRequest guardianRequest);
 
@@ -45,6 +48,7 @@ public interface GuardianContract {
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content),
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content)
     })
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     List<GuardianResponse> getAll();
 
@@ -62,12 +66,24 @@ public interface GuardianContract {
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content),
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content)
     })
+    @GetMapping("/{guardianId}")
     @ResponseStatus(HttpStatus.OK)
-    GuardianResponse getById(Long guardianId);
+    GuardianResponse getById(@PathVariable Long guardianId);
 
+    @Operation(
+            summary = "Add student to guardian",
+            description = "Associate a specific student to its guardian by ID"
+    )
+    @PostMapping("/{guardianId}/students/{studentId}")
     @ResponseStatus(HttpStatus.OK)
-    void addStudent(Long guardianId, Long studentId);
+    void addStudent(@PathVariable Long guardianId, @PathVariable Long studentId);
 
+
+    @Operation(
+            summary = "Remove student from guardian",
+            description = "Remove a specific student from its guardian by ID"
+    )
+    @DeleteMapping("/{guardianId}/students/{studentId}")
     @ResponseStatus(HttpStatus.OK)
-    void removeStudent(Long guardianId, Long studentId);
+    void removeStudent(@PathVariable Long guardianId, @PathVariable Long studentId);
 }
