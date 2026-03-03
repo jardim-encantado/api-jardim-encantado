@@ -8,9 +8,13 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface StudentMapper {
+
     Student toEntity(StudentRequest request);
 
-    @Mapping(target = "personId", expression = "java(student != null && student.getPerson() != null && student.getPerson().getId() != null ? student.getPerson().getId().intValue() : null)")
-    @Mapping(target = "studentId", expression = "java(student != null && student.getId() != null ? student.getId().intValue() : null)")
+    @Mapping(target = "studentId", source = "student.id")
+    @Mapping(target = "personId", source = "student.person.id")
+    @Mapping(target = "firstName", source = "student.person.firstName")
+    @Mapping(target = "lastName", source = "student.person.lastName")
+    @Mapping(target = "email", source = "student.person.email")
     StudentResponse toResponse(Student student);
 }

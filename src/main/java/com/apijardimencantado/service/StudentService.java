@@ -6,6 +6,7 @@ import com.apijardimencantado.model.database.enrollment.Enrollment;
 import com.apijardimencantado.model.dto.request.StudentRequest;
 import com.apijardimencantado.model.dto.response.StudentResponse;
 import com.apijardimencantado.model.mapper.StudentMapper;
+import com.apijardimencantado.repository.PersonRepository;
 import com.apijardimencantado.repository.student.StudentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,13 @@ public class StudentService extends BaseService<Student, Long, StudentRequest, S
 
     private final StudentMapper mapper;
     private final StudentRepository studentRepository;
+    private final PersonRepository personRepository;
 
-    public StudentService(StudentMapper mapper, StudentRepository studentRepository) {
+    public StudentService(StudentMapper mapper, StudentRepository studentRepository, PersonRepository personRepository) {
         super(studentRepository, "Student");
         this.mapper = mapper;
         this.studentRepository = studentRepository;
+        this.personRepository = personRepository;
     }
 
     private Student getModelById(Long studentId) {
@@ -32,7 +35,9 @@ public class StudentService extends BaseService<Student, Long, StudentRequest, S
 
     @Override
     protected Student toEntity(StudentRequest request) {
-        return mapper.toEntity(request);
+        return Student.builder()
+                .person(personRepository.findByCpf(request.cpf()))
+                .build();
     }
 
     @Override

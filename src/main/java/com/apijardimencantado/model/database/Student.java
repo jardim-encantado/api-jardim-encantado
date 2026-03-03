@@ -2,11 +2,17 @@ package com.apijardimencantado.model.database;
 
 import com.apijardimencantado.model.database.enrollment.Enrollment;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "student")
-@Data
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

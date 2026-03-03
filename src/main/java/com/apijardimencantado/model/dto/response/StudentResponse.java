@@ -1,6 +1,9 @@
 package com.apijardimencantado.model.dto.response;
 
 public record StudentResponse(
-        Integer personId,
-        Integer studentId
+        Long studentId,
+        Long personId,
+        String firstName,
+        String lastName,
+        String email
 ) { }
