@@ -1,6 +1,5 @@
 package com.apijardimencantado.service;
 
-import com.apijardimencantado.exception.StudentNotFoundException;
 import com.apijardimencantado.model.database.Student;
 import com.apijardimencantado.model.database.enrollment.Enrollment;
 import com.apijardimencantado.model.dto.request.StudentRequest;
@@ -26,11 +25,6 @@ public class StudentService extends BaseService<Student, Long, StudentRequest, S
         this.mapper = mapper;
         this.studentRepository = studentRepository;
         this.personRepository = personRepository;
-    }
-
-    private Student getModelById(Long studentId) {
-        return studentRepository.findById(studentId)
-                .orElseThrow(() -> new StudentNotFoundException(studentId));
     }
 
     @Override
