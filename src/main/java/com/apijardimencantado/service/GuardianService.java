@@ -9,10 +9,12 @@ import com.apijardimencantado.model.mapper.GuardianMapper;
 import com.apijardimencantado.model.mapper.StudentMapper;
 import com.apijardimencantado.repository.PersonRepository;
 import com.apijardimencantado.repository.student.GuardianRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.function.Consumer;
 
+@Service
 public class GuardianService extends BaseService<Guardian, Long, GuardianRequest, GuardianResponse> {
 
     private final StudentMapper studentMapper;
