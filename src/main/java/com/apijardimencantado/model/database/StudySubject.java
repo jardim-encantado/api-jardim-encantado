@@ -6,13 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "person_role")
+@Table(name = "study_subject")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Role {
+public class StudySubject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "subject_id")
+    private Long subjectId;
+
+    @Column(nullable = false, length = 100)
     private String name;
 }

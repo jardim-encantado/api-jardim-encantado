@@ -1,10 +1,9 @@
 package com.apijardimencantado.repository;
 
-import com.apijardimencantado.model.database.Person;
+import com.apijardimencantado.model.database.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PersonRepository extends JpaRepository<Person, Long> {
-    Person findByCpf(String cpf);
+public interface AddressRepository extends JpaRepository<Address, Long> {
 }
