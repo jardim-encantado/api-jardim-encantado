@@ -8,7 +8,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 
@@ -30,7 +32,8 @@ public interface TeacherContract {
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content),
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content)
     })
-    ResponseEntity<TeacherResponse> create(TeacherRequest request);
+    @ResponseStatus(HttpStatus.CREATED)
+    TeacherResponse create(TeacherRequest request);
 
     @Operation(
             summary = "List all teachers",
@@ -45,7 +48,8 @@ public interface TeacherContract {
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content),
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content)
     })
-    ResponseEntity<List<TeacherResponse>> getAll();
+    @ResponseStatus(HttpStatus.OK)
+    List<TeacherResponse> getAll();
 
     @Operation(
             summary = "Find teacher by ID",
@@ -61,5 +65,6 @@ public interface TeacherContract {
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content),
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content)
     })
-    ResponseEntity<TeacherResponse> getById(Long id);
+    @ResponseStatus(HttpStatus.OK)
+    TeacherResponse getById(Long id);
 }

@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,6 +29,12 @@ public abstract class BaseService<E, ID, Req, Res> {
     E getModelById(ID id) {
         return repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(entityName + " with ID " + id + " not found."));
+    }
+
+    E modify(ID id, Consumer<E> action) {
+        E entity = getModelById(id);
+        action.accept(entity);
+        return repository.save(entity);
     }
 
     public Res getById(ID id) {

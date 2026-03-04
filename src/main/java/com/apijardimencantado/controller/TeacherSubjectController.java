@@ -1,5 +1,6 @@
 package com.apijardimencantado.controller;
 
+import com.apijardimencantado.controller.contract.TeacherSubjectContract;
 import com.apijardimencantado.model.dto.request.TeacherSubjectRequest;
 import com.apijardimencantado.model.dto.response.TeacherSubjectResponse;
 import com.apijardimencantado.service.TeacherSubjectService;
@@ -11,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/teacher-subjects")
 @RequiredArgsConstructor
-public class TeacherSubjectController {
+public class TeacherSubjectController implements TeacherSubjectContract {
 
     private final TeacherSubjectService service;
 
