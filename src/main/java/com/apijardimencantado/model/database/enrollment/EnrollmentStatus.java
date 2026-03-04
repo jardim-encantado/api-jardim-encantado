@@ -21,8 +21,8 @@ public enum EnrollmentStatus implements ValuedEnum<Integer> {
     @Converter(autoApply = true)
     public static class Convert extends GenericEnumConverter<EnrollmentStatus, Integer> {
 
-        protected Convert(Class<EnrollmentStatus> enumClass) {
-            super(enumClass);
+        protected Convert() {
+            super(EnrollmentStatus.class);
         }
     }
 
