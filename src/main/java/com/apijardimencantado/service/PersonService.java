@@ -1,13 +1,10 @@
 package com.apijardimencantado.service;
 
 import com.apijardimencantado.model.database.Person;
-import com.apijardimencantado.model.database.Role;
 import com.apijardimencantado.model.dto.request.PersonRequest;
 import com.apijardimencantado.model.dto.response.PersonResponse;
 import com.apijardimencantado.model.mapper.PersonMapper;
 import com.apijardimencantado.repository.PersonRepository;
-import com.apijardimencantado.repository.RoleRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,12 +13,12 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class PersonService extends BaseService<Person, Long, PersonRequest, PersonResponse> {
     private final PersonMapper mapper;
-    private final RoleRepository roleRepository;
+    private final PersonRepository repository;
 
-    public PersonService(PersonMapper personMapper, PersonRepository personRepository, RoleRepository roleRepository) {
+    public PersonService(PersonMapper personMapper, PersonRepository personRepository) {
         super(personRepository, "Person");
         this.mapper = personMapper;
-        this.roleRepository = roleRepository;
+        this.repository = personRepository;
     }
 
     @Override
@@ -29,28 +26,31 @@ public class PersonService extends BaseService<Person, Long, PersonRequest, Pers
     public PersonResponse create(PersonRequest request) {
         log.info("[PersonService] [create] CREATE");
 
-        Person entity = toEntity(request);
-
-        Role role = roleRepository
-                .findById(request.roleId())
-                .orElseThrow(() ->
-                        new EntityNotFoundException("Role not found: " + request.roleId())
-                );
-
-        entity.setRole(role);
+        Person entity = repository.findById(repository.createPerson(
+                request.firstName(),
+                request.lastName(),
+                request.email(),
+                request.cpf(),
+                request.phoneNumber(),
+                request.password(),
+                request.roleId()
+                )).orElseThrow();
 
         return toResponse(repository.save(entity));
     }
 
-    public Person toEntity(PersonRequest request) {
+    @Override
+    protected Person toEntity(PersonRequest request) {
         return mapper.toEntity(request);
     }
 
-    public PersonResponse toResponse(Person person) {
+    @Override
+    protected PersonResponse toResponse(Person person) {
         return mapper.toResponse(person);
     }
 
-    public void updateEntity(Person person, PersonRequest request) {
+    @Override
+    protected void updateEntity(Person person, PersonRequest request) {
         person.setEmail(request.email());
         person.setFirstName(request.firstName());
         person.setLastName(request.lastName());
@@ -59,5 +59,4 @@ public class PersonService extends BaseService<Person, Long, PersonRequest, Pers
         }
         person.setPhotoUrl(request.photoUrl());
     }
-
 }
