@@ -19,17 +19,17 @@ public class TeacherController implements TeacherContract {
     private final TeacherService service;
 
     @GetMapping
-    public ResponseEntity<List<TeacherResponse>> getAll() {
-        return ResponseEntity.ok(service.getAll());
+    public List<TeacherResponse> getAll() {
+        return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TeacherResponse> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getById(id));
+    public TeacherResponse getById(@PathVariable Long id) {
+        return service.getById(id);
     }
 
     @PostMapping
-    public ResponseEntity<TeacherResponse> create(@RequestBody TeacherRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
+    public TeacherResponse create(@RequestBody TeacherRequest request) {
+        return service.create(request);
     }
 }

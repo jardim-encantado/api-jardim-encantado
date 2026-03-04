@@ -43,6 +43,7 @@ public class Enrollment {
     public void finish() {
         this.state = this.getState().finish();
         this.status = this.state.getStatus();
+        this.enrollment_date = LocalDateTime.now();
     }
 
     public void reject() {

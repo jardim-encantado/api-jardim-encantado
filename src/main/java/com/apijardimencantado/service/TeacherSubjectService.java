@@ -5,7 +5,6 @@ import com.apijardimencantado.model.dto.request.TeacherSubjectRequest;
 import com.apijardimencantado.model.dto.response.TeacherSubjectResponse;
 import com.apijardimencantado.model.mapper.TeacherSubjectMapper;
 import com.apijardimencantado.repository.*;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,32 +12,25 @@ public class TeacherSubjectService extends BaseService<TeacherSubject, Long,
         TeacherSubjectRequest, TeacherSubjectResponse> {
 
     private final TeacherSubjectMapper mapper;
-    private final TeacherRepository teacherRepository;
-    private final StudySubjectRepository subjectRepository;
+    private final TeacherService teacherService;
+    private final StudySubjectService subjectService;
 
     public TeacherSubjectService(
             TeacherSubjectRepository repository,
             TeacherSubjectMapper mapper,
-            TeacherRepository teacherRepository,
-            StudySubjectRepository subjectRepository
+            TeacherService teacherService,
+            StudySubjectService subjectService
     ) {
         super(repository, "TeacherSubject");
         this.mapper = mapper;
-        this.teacherRepository = teacherRepository;
-        this.subjectRepository = subjectRepository;
+        this.teacherService = teacherService;
+        this.subjectService = subjectService;
     }
 
     @Override
     protected TeacherSubject toEntity(TeacherSubjectRequest request) {
-        Teacher teacher = teacherRepository.findById(request.teacherId())
-                .orElseThrow(() ->
-                        new EntityNotFoundException("Teacher with ID " + request.teacherId() + " not found")
-                );
-
-        StudySubject subject = subjectRepository.findById(request.subjectId())
-                .orElseThrow(() ->
-                        new EntityNotFoundException("Subject with ID " + request.subjectId() + " not found")
-                );
+        Teacher teacher = teacherService.getModelById(request.teacherId());
+        StudySubject subject = subjectService.getModelById(request.subjectId());
 
         return TeacherSubject.builder()
                 .teacher(teacher)
