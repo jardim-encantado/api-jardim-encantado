@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,10 +26,20 @@ public abstract class BaseService<E, ID, Req, Res> {
                 .toList();
     }
 
+    E getModelById(ID id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(entityName + " with ID " + id + " not found."));
+    }
+
+    E modify(ID id, Consumer<E> action) {
+        E entity = getModelById(id);
+        action.accept(entity);
+        return repository.save(entity);
+    }
+
     public Res getById(ID id) {
         log.info("[{}Service] [getById] GET BY ID {}", entityName, id);
-        E entity = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(entityName + " with ID " + id + " not found."));
+        E entity = getModelById(id);
         return toResponse(entity);
     }
 
@@ -42,8 +53,7 @@ public abstract class BaseService<E, ID, Req, Res> {
     @Transactional
     public Res update(ID id, Req request) {
         log.info("[{}Service] [updateById] UPDATE WITH ID {}", entityName, id);
-        E entity = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(entityName + " with ID " + id + " not found."));
+        E entity = getModelById(id);
         log.info("[{}Service] [updateById] entity = {}", entityName, entity);
         updateEntity(entity, request);
         return toResponse(repository.save(entity));
