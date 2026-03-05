@@ -8,8 +8,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ClassroomMapper {
-    @Mapping(target = "classroom_id", ignore = true)
+    @Mapping(target = "classroomId", ignore = true)
     Classroom toEntity(ClassroomRequest request);
     ClassroomResponse toResponse(Classroom classroom);
-
 }

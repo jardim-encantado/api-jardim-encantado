@@ -35,18 +35,20 @@ public class ClassroomGroupService extends BaseService<ClassroomGroup, Long, Cla
     public ClassroomGroupResponse create(ClassroomGroupRequest request) {
         log.info("[ClassroomGroupService] [create] CREATE");
 
-        if (!classroomRepository.existsById(request.classroom_id())
-                || !teacherRepository.existsById(request.teacher_id())) {
+        if (!classroomRepository.existsClassroomByIdentifier(request.classroomId().identifier())
+                || !teacherRepository.existsByPersonCpf(request.teacherId().cpf())) {
 
             throw new EntityNotFoundException(
                     "Classroom or Teacher not found. Classroom ID: "
-                            + request.classroom_id()
+                            + request.classroomId()
                             + ", Teacher ID: "
-                            + request.teacher_id()
+                            + request.teacherId()
             );
         }
 
         ClassroomGroup entity = toEntity(request);
+        entity.setClassroomId(classroomRepository.findClassroomByIdentifier(request.classroomId().identifier()));
+        entity.setTeacherId(teacherRepository.findTeacherByPersonCpf(request.teacherId().cpf()));
         return toResponse(repository.save(entity));
     }
     @Override
@@ -65,17 +67,19 @@ public class ClassroomGroupService extends BaseService<ClassroomGroup, Long, Cla
         entity.setName(request.name());
         entity.setSeries(request.series());
 
-        Classroom classroom = classroomRepository.findById(request.classroom_id())
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "Classroom not found with id: " + request.classroom_id()
-                ));
+        Classroom classroom = classroomRepository.findClassroomByIdentifier(request.classroomId().identifier());
+        Teacher teacher = teacherRepository.findTeacherByPersonCpf(request.teacherId().cpf());
 
-        Teacher teacher = teacherRepository.findById(request.teacher_id())
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "Teacher not found with id: " + request.teacher_id()
-                ));
+        if (classroom == null || teacher == null) {
+            throw new EntityNotFoundException(
+                    "Classroom or Teacher not found. Classroom ID: "
+                            + request.classroomId()
+                            + ", Teacher ID: "
+                            + request.teacherId()
+            );
+        }
 
-        entity.setClassroom_id(classroom.getClassroom_id());
-        entity.setTeacher_id(teacher.getTeacher_id());
+        entity.setClassroomId(classroom);
+        entity.setTeacherId(teacher);
     }
 }

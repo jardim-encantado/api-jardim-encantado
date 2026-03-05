@@ -9,6 +9,8 @@ import lombok.Data;
 public class Classroom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long classroom_id;
+    @Column(name = "classroom_id")
+    private Long classroomId;
     private String identifier;
+
 }

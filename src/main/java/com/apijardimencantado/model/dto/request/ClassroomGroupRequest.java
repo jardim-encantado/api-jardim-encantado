@@ -1,6 +1,7 @@
 package com.apijardimencantado.model.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record ClassroomGroupRequest(
 
@@ -10,10 +11,10 @@ public record ClassroomGroupRequest(
         @NotBlank(message = "A série é obirgatório")
         String series,
 
-        @NotBlank(message = "O classroom_id é obrigatório")
-        Long classroom_id,
+        @NotNull(message = "O identificador da sala é obrigatório")
+        ClassroomRequest classroomId,
 
-        @NotBlank(message = "O teacher_id é obrigatório")
-        Long teacher_id
+        @NotNull(message = "O cpf do professor é obrigatório")
+        TeacherRequest teacherId
 
 ) {}
