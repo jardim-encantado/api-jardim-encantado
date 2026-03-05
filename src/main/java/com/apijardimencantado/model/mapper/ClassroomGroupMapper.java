@@ -6,11 +6,16 @@ import com.apijardimencantado.model.dto.response.ClassroomGroupResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(
+        componentModel = "spring",
+        uses = { ClassroomMapper.class }
+)
 public interface ClassroomGroupMapper {
 
-    @Mapping(target = "group_id", ignore = true)
+    @Mapping(target = "groupId", ignore = true)
+    @Mapping(target = "teacherId", ignore = true)
+    @Mapping(target = "classroomId", ignore = true)
     ClassroomGroup toEntity(ClassroomGroupRequest request);
-    ClassroomGroupResponse toResponse(ClassroomGroup classroomGroup);
 
+    ClassroomGroupResponse toResponse(ClassroomGroup entity);
 }

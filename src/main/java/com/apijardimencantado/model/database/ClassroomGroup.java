@@ -9,10 +9,17 @@ import lombok.Data;
 public class ClassroomGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long group_id;
+    @Column(name = "group_id")
+    private Long groupId;
     private String name;
     private String series;
 
-    private Long classroom_id;
-    private Long teacher_id;
+    @OneToOne
+    @JoinColumn(name = "classroom_id", nullable = false)
+    private Classroom classroomId;
+
+    @OneToOne
+    @JoinColumn(name = "teacher_id", nullable = false)
+    private Teacher teacherId;
+
 }

@@ -1,7 +1,8 @@
 package com.apijardimencantado.model.dto.response;
 
+
 public record ClassroomResponse (
-        Long classroom_id,
+        Long classroomId,
         String identifier
 
 ) {}
