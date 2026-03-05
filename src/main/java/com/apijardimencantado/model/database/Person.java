@@ -20,6 +20,7 @@ public class Person {
     private String cpf;
     private String password;
     private String photoUrl;
+    private String phoneNumber;
 
     @ManyToOne
     @JoinColumn(name = "person_role_id", nullable = false)
