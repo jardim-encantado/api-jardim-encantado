@@ -18,6 +18,8 @@ public class Person {
     private String lastName;
     private String email;
     private String cpf;
+
+    @Column(name = "password_hash")
     private String password;
     private String photoUrl;
     private String phoneNumber;

@@ -36,10 +36,16 @@ public class StudentService extends BaseService<Student, Long, StudentRequest, S
     @Override
     public StudentResponse create(StudentRequest request) {
         Person person = personRepository.findByCpf(request.cpf());
+        if (studentRepository.findByCpf(request.cpf()) != null){
+            throw new UnsupportedOperationException("Estudante já cadastrado");
+        }
         if (person.getRole().getId() != 1){
-            throw new UnsupportedOperationException();
+            throw new UnsupportedOperationException("Este usuário não foi pré cadastrado como estudante");
         }
         Enrollment enrollment = new Enrollment();
+        enrollment.setEnrollment_date(LocalDateTime.now());
+        enrollment.setCreate_date(LocalDateTime.now());
+        enrollment.setUpdate_date(LocalDateTime.now());
         enrollmentRepository.save(enrollment);
         Student student = new Student();
         student.setPerson(person);
