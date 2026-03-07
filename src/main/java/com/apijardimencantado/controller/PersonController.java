@@ -1,6 +1,7 @@
 package com.apijardimencantado.controller;
 
 import com.apijardimencantado.controller.contract.PersonContract;
+import com.apijardimencantado.model.dto.request.LoginRequest;
 import com.apijardimencantado.model.dto.request.PersonRequest;
 import com.apijardimencantado.model.dto.response.PersonResponse;
 import com.apijardimencantado.service.PersonService;
@@ -44,5 +45,13 @@ public class PersonController implements PersonContract {
             @RequestBody PersonRequest personRequest
     ) {
         return ResponseEntity.ok(personService.update(id, personRequest));
+    }
+
+    @Override
+    @PostMapping("/login")
+    public ResponseEntity<PersonResponse> login(
+            @RequestBody LoginRequest loginRequest
+    ) {
+        return ResponseEntity.ok(personService.login(loginRequest));
     }
 }

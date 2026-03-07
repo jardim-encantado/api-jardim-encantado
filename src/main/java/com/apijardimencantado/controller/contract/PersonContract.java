@@ -1,5 +1,6 @@
 package com.apijardimencantado.controller.contract;
 
+import com.apijardimencantado.model.dto.request.LoginRequest;
 import com.apijardimencantado.model.dto.request.PersonRequest;
 import com.apijardimencantado.model.dto.response.PersonResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +10,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -78,4 +81,6 @@ public interface PersonContract {
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content)
     })
     ResponseEntity<PersonResponse> update(Long id, PersonRequest personRequest);
+
+    ResponseEntity<PersonResponse> login(LoginRequest loginRequest);
 }
