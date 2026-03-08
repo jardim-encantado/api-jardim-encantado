@@ -28,4 +28,8 @@ public class Address {
 
     @Column(nullable = false)
     private String state;
+
+    @ManyToOne
+    @JoinColumn(name = "person_id")
+    private Person person;
 }

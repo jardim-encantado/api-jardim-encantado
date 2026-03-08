@@ -32,5 +32,5 @@ public interface RoleContract {
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content),
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content)
     })
-    ResponseEntity<RoleResponse> getById(Long id);
+    ResponseEntity<RoleResponse> getById(Integer id);
 }

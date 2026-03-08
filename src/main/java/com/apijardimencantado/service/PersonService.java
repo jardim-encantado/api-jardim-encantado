@@ -1,14 +1,21 @@
 package com.apijardimencantado.service;
 
+import com.apijardimencantado.model.database.Address;
 import com.apijardimencantado.model.database.Person;
+import com.apijardimencantado.model.database.Role;
 import com.apijardimencantado.model.dto.request.LoginRequest;
 import com.apijardimencantado.model.dto.request.PersonRequest;
+import com.apijardimencantado.model.dto.response.AddressResponse;
 import com.apijardimencantado.model.dto.response.PersonResponse;
+import com.apijardimencantado.model.mapper.AddressMapper;
 import com.apijardimencantado.model.mapper.PersonMapper;
+import com.apijardimencantado.repository.person.AddressRepository;
 import com.apijardimencantado.repository.person.PersonRepository;
+import com.apijardimencantado.repository.person.RoleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.Repository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,16 +23,36 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class PersonService extends BaseService<Person, Long, PersonRequest, PersonResponse> {
     private final PersonMapper mapper;
+    private final AddressMapper addressMapper;
+    private final AddressRepository addressRepository;
     private final PersonRepository repository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
 
 
-    public PersonService(PersonMapper personMapper, PersonRepository personRepository, PasswordEncoder passwordEncoder) {
+    public PersonService(PersonMapper personMapper, PersonRepository personRepository,
+                         PasswordEncoder passwordEncoder, RoleRepository roleRepository,
+                         AddressMapper addressMapper, AddressRepository addressRepository) {
         super(personRepository, "Person");
         this.mapper = personMapper;
         this.repository = personRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
+        this.addressMapper = addressMapper;
+        this.addressRepository = addressRepository;
+    }
+
+    @Override
+    @Transactional
+    public PersonResponse create(PersonRequest request){
+            log.info("[PersonService] [create] CREATE");
+            Person person = repository.save(toEntity(request));
+            Address address = addressMapper.toEntity(request.address());
+            address.setPerson(person);
+            addressRepository.save(address);
+
+            return toResponse(person);
     }
 
     public PersonResponse login(LoginRequest request) {
@@ -40,31 +67,18 @@ public class PersonService extends BaseService<Person, Long, PersonRequest, Pers
     }
 
     @Override
-    @Transactional
-    public PersonResponse create(PersonRequest request) {
-        log.info("[PersonService] [create] CREATE");
-
-        Person entity = repository.findById(repository.createPerson(
-                request.firstName(),
-                request.lastName(),
-                request.email(),
-                request.cpf(),
-                request.phoneNumber(),
-                request.password(),
-                request.roleId()
-                )).orElseThrow();
-
-        return toResponse(repository.save(entity));
-    }
-
-    @Override
     protected Person toEntity(PersonRequest request) {
-        return mapper.toEntity(request);
+        Role role = roleRepository.findById(request.roleId())
+                .orElseThrow(() -> new EntityNotFoundException("Role not found."));
+
+        return mapper.toEntity(request, role);
     }
 
     @Override
     protected PersonResponse toResponse(Person person) {
-        return mapper.toResponse(person);
+        AddressResponse address = addressMapper.toResponse(
+                addressRepository.findAddressByPerson_Id(person.getId()));
+        return mapper.toResponse(person, address);
     }
 
     @Override
@@ -78,3 +92,4 @@ public class PersonService extends BaseService<Person, Long, PersonRequest, Pers
         person.setPhotoUrl(request.photoUrl());
     }
 }
+

@@ -29,7 +29,7 @@ public class RoleController implements RoleContract {
 
     @GetMapping("/{id}")
     @Override
-    public ResponseEntity<RoleResponse> getById(@PathVariable Long id) {
+    public ResponseEntity<RoleResponse> getById(@PathVariable Integer id) {
         return ResponseEntity.ok(roleService.getById(id));
     }
 }
