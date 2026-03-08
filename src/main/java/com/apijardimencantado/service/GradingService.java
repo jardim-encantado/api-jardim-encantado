@@ -6,7 +6,11 @@ import com.apijardimencantado.model.database.StudySubject;
 import com.apijardimencantado.model.database.Teacher;
 import com.apijardimencantado.model.dto.request.GradingRequest;
 import com.apijardimencantado.model.dto.response.GradingResponse;
+import com.apijardimencantado.model.dto.response.TeacherSubjectResponse;
 import com.apijardimencantado.model.mapper.GradingMapper;
+import com.apijardimencantado.model.mapper.StudentMapper;
+import com.apijardimencantado.model.mapper.StudySubjectMapper;
+import com.apijardimencantado.model.mapper.TeacherMapper;
 import com.apijardimencantado.repository.grading.GradingRepository;
 import com.apijardimencantado.repository.student.StudentRepository;
 import com.apijardimencantado.repository.teacher.StudySubjectRepository;
@@ -15,12 +19,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Slf4j
 @Service
 public class GradingService extends BaseService<Grading, Long, GradingRequest, GradingResponse> {
 
     private final GradingMapper mapper;
+    private final StudentMapper studentMapper;
+    private final TeacherMapper teacherMapper;
+    private final StudySubjectMapper subjectMapper;
     private final StudentRepository studentRepository;
     private final StudySubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
@@ -28,12 +36,18 @@ public class GradingService extends BaseService<Grading, Long, GradingRequest, G
     public GradingService(
             GradingRepository repository,
             GradingMapper mapper,
+            StudentMapper studentMapper,
+            TeacherMapper teacherMapper,
+            StudySubjectMapper subjectMapper,
             StudentRepository studentRepository,
             StudySubjectRepository subjectRepository,
             TeacherRepository teacherRepository
     ) {
         super(repository, "Grading");
         this.mapper = mapper;
+        this.studentMapper = studentMapper;
+        this.teacherMapper = teacherMapper;
+        this.subjectMapper = subjectMapper;
         this.studentRepository = studentRepository;
         this.subjectRepository = subjectRepository;
         this.teacherRepository = teacherRepository;
@@ -63,7 +77,11 @@ public class GradingService extends BaseService<Grading, Long, GradingRequest, G
 
     @Override
     protected GradingResponse toResponse(Grading entity) {
-        return mapper.toResponse(entity);
+
+        return mapper.toResponse(entity,
+                studentMapper.toResponse(entity.getStudent()),
+                subjectMapper.toResponse(entity.getSubject()),
+                teacherMapper.toResponse(entity.getGivenByTeacherId(), null));
     }
 
     @Override
@@ -86,12 +104,6 @@ public class GradingService extends BaseService<Grading, Long, GradingRequest, G
     }
 
     private Integer getCurrentBimonthly() {
-
-        int month = LocalDate.now().getMonthValue();
-
-        if (month <= 3) return 1;
-        if (month <= 6) return 2;
-        if (month <= 9) return 3;
-        return 4;
+        return (LocalDate.now().getMonthValue() - 1) / 3 + 1;
     }
 }

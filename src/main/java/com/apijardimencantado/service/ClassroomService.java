@@ -4,7 +4,7 @@ import com.apijardimencantado.model.database.Classroom;
 import com.apijardimencantado.model.dto.request.ClassroomRequest;
 import com.apijardimencantado.model.dto.response.ClassroomResponse;
 import com.apijardimencantado.model.mapper.ClassroomMapper;
-import com.apijardimencantado.repository.ClassroomRepository;
+import com.apijardimencantado.repository.classroom.ClassroomRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

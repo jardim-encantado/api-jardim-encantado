@@ -5,11 +5,10 @@ import com.apijardimencantado.model.dto.request.LoginRequest;
 import com.apijardimencantado.model.dto.request.PersonRequest;
 import com.apijardimencantado.model.dto.response.PersonResponse;
 import com.apijardimencantado.model.mapper.PersonMapper;
-import com.apijardimencantado.repository.PersonRepository;
+import com.apijardimencantado.repository.person.PersonRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

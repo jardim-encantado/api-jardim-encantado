@@ -22,14 +22,6 @@ public class Grading {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long gradingId;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
-
-    @ManyToOne
-    @JoinColumn(name = "subject_id")
-    private StudySubject subject;
-
     @Column(nullable = false, precision = 5, scale = 2)
     private BigDecimal grade;
 
@@ -43,7 +35,18 @@ public class Grading {
     @UpdateTimestamp
     private LocalDateTime updateDate;
 
+    private Integer bimonthly;
+
     @ManyToOne
     @JoinColumn
     private Teacher givenByTeacherId;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
+
+    @ManyToOne
+    @JoinColumn(name = "subject_id")
+    private StudySubject subject;
+
 }

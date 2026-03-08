@@ -1,18 +1,20 @@
 package com.apijardimencantado.model.dto.response;
 
+import com.apijardimencantado.model.database.Teacher;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record GradingResponse(
         Long gradingId,
-        Long studentId,
-        Long subjectId,
+        StudentResponse student,
+        StudySubjectResponse subject,
         String subjectName,
         BigDecimal grade,
         String observations,
         LocalDateTime gradingDate,
         LocalDateTime updateDate,
-        Long givenByTeacherId,
-        String teacherName
+        Integer bimonthly,
+        TeacherResponse givenBy
 ) {
 }

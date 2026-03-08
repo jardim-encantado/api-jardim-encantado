@@ -84,7 +84,23 @@ public interface PersonContract {
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content)
     })
     @ResponseStatus(HttpStatus.OK)
-    ResponseEntity<PersonResponse> update(Long id, PersonRequest personRequest);
+    PersonResponse update(Long id, PersonRequest personRequest);
 
-    ResponseEntity<PersonResponse> login(LoginRequest loginRequest);
+    @Operation(
+            summary = "Update person",
+            description = "Update an existing person by its ID"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Person updated successfully",
+                    content = @Content(schema = @Schema(implementation = PersonResponse.class))
+            ),
+            @ApiResponse(responseCode = "400", description = "Invalid data provided", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Person not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content)
+    })
+    @ResponseStatus(HttpStatus.OK)
+    PersonResponse login(LoginRequest loginRequest);
 }

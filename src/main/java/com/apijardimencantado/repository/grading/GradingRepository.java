@@ -1,4 +1,7 @@
 package com.apijardimencantado.repository.grading;
 
-public interface GradingRepository {
+import com.apijardimencantado.model.database.Grading;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface GradingRepository extends JpaRepository<Grading, Long> {
 }
