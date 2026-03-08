@@ -104,7 +104,7 @@ A documentação da API foi feita na plataforma Swagger UI
 
 Depois de iniciar o projeto, acesse:
 
-http://localhost:8080/swagger-ui.html
+ https://api-jardim-encantado.onrender.com/api-docs
 
 <br>
 
@@ -112,13 +112,13 @@ http://localhost:8080/swagger-ui.html
 
 As requisições da API seguem o padrão:
 
-/api/v1/{nome-da-entidade}
+/{nome-da-entidade}
 
 Exemplos:
 
-GET /api/v1/teachers  
-GET /api/v1/students  
-POST /api/v1/classroom-groups
+GET /teachers  
+GET /students/1
+POST /classroom-groups
 
 <br>
 
