@@ -84,7 +84,7 @@ public interface PersonContract {
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content)
     })
     @ResponseStatus(HttpStatus.OK)
-    ResponseEntity<PersonResponse> update(Long id, PersonRequest personRequest);
+    PersonResponse update(Long id, PersonRequest personRequest);
 
     ResponseEntity<PersonResponse> login(LoginRequest loginRequest);
 }
