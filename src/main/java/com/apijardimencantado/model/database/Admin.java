@@ -1,22 +1,15 @@
 package com.apijardimencantado.model.database;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "teacher")
+@Table(name = "admin")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class Teacher {
+public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "teacher_id")
-    private Long id;
+    private Long adminId;
 
     @ManyToOne
     @JoinColumn(name = "person_id", nullable = false)
