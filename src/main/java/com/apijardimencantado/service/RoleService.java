@@ -8,7 +8,7 @@ import com.apijardimencantado.repository.person.RoleRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RoleService extends BaseService<Role, Long, RoleRequest, RoleResponse> {
+public class RoleService extends BaseService<Role, Integer, RoleRequest, RoleResponse> {
     private final RoleMapper mapper;
 
     public RoleService(RoleRepository roleRepository, RoleMapper mapper) {

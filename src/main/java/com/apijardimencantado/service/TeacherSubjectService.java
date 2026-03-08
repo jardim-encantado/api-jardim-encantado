@@ -32,10 +32,7 @@ public class TeacherSubjectService extends BaseService<TeacherSubject, Long,
         Teacher teacher = teacherService.getModelById(request.teacherId());
         StudySubject subject = subjectService.getModelById(request.subjectId());
 
-        return TeacherSubject.builder()
-                .teacher(teacher)
-                .subject(subject)
-                .build();
+        return mapper.toEntity(teacher, subject);
     }
 
     @Override

@@ -13,6 +13,7 @@ public interface TeacherMapper {
     Teacher toEntity(TeacherRequest request);
 
     @Mapping(target = "personId", source = "teacher.person.id")
+    @Mapping(target = "teacherId", source = "teacher.id")
     @Mapping(target = "firstName", source = "teacher.person.firstName")
     @Mapping(target = "lastName", source = "teacher.person.lastName")
     @Mapping(target = "email", source = "teacher.person.email")

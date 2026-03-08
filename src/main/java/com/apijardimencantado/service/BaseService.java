@@ -31,12 +31,6 @@ public abstract class BaseService<E, ID, Req, Res> {
                 .orElseThrow(() -> new EntityNotFoundException(entityName + " with ID " + id + " not found."));
     }
 
-    E modify(ID id, Consumer<E> action) {
-        E entity = getModelById(id);
-        action.accept(entity);
-        return repository.save(entity);
-    }
-
     public Res getById(ID id) {
         log.info("[{}Service] [getById] GET BY ID {}", entityName, id);
         E entity = getModelById(id);
