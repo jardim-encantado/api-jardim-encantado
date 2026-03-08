@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
 import java.util.List;
 
 @Tag(name = "Person Controller", description = "Endpoints to manage persons")
@@ -83,6 +84,7 @@ public interface PersonContract {
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content)
     })
     @ResponseStatus(HttpStatus.OK)
-    PersonResponse update(Long id, PersonRequest personRequest);
+    ResponseEntity<PersonResponse> update(Long id, PersonRequest personRequest);
+
     ResponseEntity<PersonResponse> login(LoginRequest loginRequest);
 }
