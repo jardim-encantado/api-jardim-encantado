@@ -12,32 +12,37 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1/students")
 public class StudentController implements StudentContract {
 
     private final StudentService studentService;
 
     @Override
+    @PostMapping
     public StudentResponse createStudent(@RequestBody StudentRequest request) {
         return studentService.create(request);
     }
 
     @Override
+    @PatchMapping("/{studentId}/enrollment/finish")
     public StudentResponse finishEnrollment(Long id) {
         return studentService.enroll(id);
     }
 
     @Override
+    @PatchMapping("/{studentId}/enrollment/approve")
     public StudentResponse rejectEnrollment(Long studentId) {
         return studentService.rejectEnrollment(studentId);
     }
 
     @Override
+    @GetMapping
     public List<StudentResponse> getAll() {
         return studentService.getAll();
     }
 
     @Override
+    @GetMapping("/{id}")
     public StudentResponse getById(@PathVariable Long id) {
         return studentService.getById(id);
     }

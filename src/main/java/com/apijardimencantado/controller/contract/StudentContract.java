@@ -33,7 +33,6 @@ public interface StudentContract {
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content),
             @ApiResponse(responseCode = "404", description = "Student not found", content = @Content),
     })
-    @PostMapping("/students")
     @ResponseStatus(HttpStatus.CREATED)
     StudentResponse createStudent(StudentRequest request);
 
@@ -53,7 +52,6 @@ public interface StudentContract {
             @ApiResponse(responseCode = "409", description = "Could not finish student's enrollment due to state constraints.", content = @Content),
 
     })
-    @PatchMapping("/students/{studentId}/enrollment/finish")
     @ResponseStatus(HttpStatus.OK)
     StudentResponse finishEnrollment(@PathVariable Long studentId);
 
@@ -75,7 +73,6 @@ public interface StudentContract {
             @ApiResponse(responseCode = "409", description = "Could not reject student's enrollment due to state constraints.", content = @Content),
     })
 
-    @PatchMapping("/students/{studentId}/enrollment/approve")
     @ResponseStatus(HttpStatus.OK)
     StudentResponse rejectEnrollment(@PathVariable Long studentId);
 
@@ -92,7 +89,6 @@ public interface StudentContract {
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content),
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content)
     })
-    @GetMapping("/students")
     @ResponseStatus(HttpStatus.OK)
     List<StudentResponse> getAll();
 
@@ -110,7 +106,6 @@ public interface StudentContract {
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content),
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content)
     })
-    @GetMapping("/students/{id}")
     @ResponseStatus(HttpStatus.OK)
     StudentResponse getById(@PathVariable Long id);
 
