@@ -6,7 +6,6 @@ import com.apijardimencantado.model.dto.request.PersonRequest;
 import com.apijardimencantado.model.dto.response.PersonResponse;
 import com.apijardimencantado.service.PersonService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,30 +20,29 @@ public class PersonController implements PersonContract {
 
     @Override
     @PostMapping
-    public ResponseEntity<PersonResponse> create(@RequestBody PersonRequest personRequest) {
-        PersonResponse response = personService.create(personRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public PersonResponse create(@RequestBody PersonRequest personRequest) {
+        return personService.create(personRequest);
     }
 
     @Override
     @GetMapping
-    public ResponseEntity<List<PersonResponse>> getAll() {
-        return ResponseEntity.ok(personService.getAll());
+    public List<PersonResponse> getAll() {
+        return personService.getAll();
     }
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<PersonResponse> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(personService.getById(id));
+    public PersonResponse getById(@PathVariable Long id) {
+        return personService.getById(id);
     }
 
     @Override
     @PutMapping("/{id}")
-    public ResponseEntity<PersonResponse> update(
+    public PersonResponse update(
             @PathVariable Long id,
             @RequestBody PersonRequest personRequest
     ) {
-        return ResponseEntity.ok(personService.update(id, personRequest));
+        return personService.update(id, personRequest);
     }
 
     @Override
