@@ -1,12 +1,16 @@
 package com.apijardimencantado.service;
 
 import com.apijardimencantado.model.database.Person;
+import com.apijardimencantado.model.dto.request.LoginRequest;
 import com.apijardimencantado.model.dto.request.PersonRequest;
 import com.apijardimencantado.model.dto.response.PersonResponse;
 import com.apijardimencantado.model.mapper.PersonMapper;
 import com.apijardimencantado.repository.PersonRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,11 +18,26 @@ import org.springframework.stereotype.Service;
 public class PersonService extends BaseService<Person, Long, PersonRequest, PersonResponse> {
     private final PersonMapper mapper;
     private final PersonRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
-    public PersonService(PersonMapper personMapper, PersonRepository personRepository) {
+
+
+    public PersonService(PersonMapper personMapper, PersonRepository personRepository, PasswordEncoder passwordEncoder) {
         super(personRepository, "Person");
         this.mapper = personMapper;
         this.repository = personRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public PersonResponse login(LoginRequest request) {
+        Person person = repository.findByCpf(request.cpf());
+        if (person == null) {
+            throw new EntityNotFoundException("Person not found");
+        }
+        if (!passwordEncoder.matches(request.password(), person.getPassword())) {
+            throw new RuntimeException("Senha inválida");
+        }
+        return toResponse(person);
     }
 
     @Override

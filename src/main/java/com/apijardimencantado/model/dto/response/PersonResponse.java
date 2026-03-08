@@ -5,6 +5,7 @@ public record PersonResponse(
         String firstName,
         String lastName,
         String photoUrl,
+        Integer roleId,
         String roleName,
         AddressResponse address
 ) {}

@@ -10,10 +10,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "Student Controller", description = "Endpoints to manage persons")
 @Validated
@@ -34,7 +33,6 @@ public interface StudentContract {
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content),
             @ApiResponse(responseCode = "404", description = "Student not found", content = @Content),
     })
-    @PostMapping("/students")
     @ResponseStatus(HttpStatus.CREATED)
     StudentResponse createStudent(StudentRequest request);
 
@@ -54,7 +52,6 @@ public interface StudentContract {
             @ApiResponse(responseCode = "409", description = "Could not finish student's enrollment due to state constraints.", content = @Content),
 
     })
-    @PatchMapping("/students/{studentId}/enrollment/finish")
     @ResponseStatus(HttpStatus.OK)
     StudentResponse finishEnrollment(@PathVariable Long studentId);
 
@@ -76,7 +73,41 @@ public interface StudentContract {
             @ApiResponse(responseCode = "409", description = "Could not reject student's enrollment due to state constraints.", content = @Content),
     })
 
-    @PatchMapping("/students/{studentId}/enrollment/approve")
     @ResponseStatus(HttpStatus.OK)
     StudentResponse rejectEnrollment(@PathVariable Long studentId);
+
+    @Operation(
+            summary = "List all students",
+            description = "Retrieve all registered students"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Request completed successfully",
+                    content = @Content(schema = @Schema(implementation = StudentResponse.class))
+            ),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content)
+    })
+    @ResponseStatus(HttpStatus.OK)
+    List<StudentResponse> getAll();
+
+    @Operation(
+            summary = "Find student by ID",
+            description = "Retrieve a specific student by its ID"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Student found successfully",
+                    content = @Content(schema = @Schema(implementation = StudentResponse.class))
+            ),
+            @ApiResponse(responseCode = "404", description = "Student not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content)
+    })
+    @ResponseStatus(HttpStatus.OK)
+    StudentResponse getById(@PathVariable Long id);
+
+
 }

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
     Person findByCpf(String cpf);
-
     @Query(
             value = """
         SELECT create_person(
