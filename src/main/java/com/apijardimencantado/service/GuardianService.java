@@ -7,7 +7,7 @@ import com.apijardimencantado.model.dto.response.GuardianResponse;
 import com.apijardimencantado.model.dto.response.StudentResponse;
 import com.apijardimencantado.model.mapper.GuardianMapper;
 import com.apijardimencantado.model.mapper.StudentMapper;
-import com.apijardimencantado.repository.PersonRepository;
+import com.apijardimencantado.repository.person.PersonRepository;
 import com.apijardimencantado.repository.student.GuardianRepository;
 import org.springframework.stereotype.Service;
 

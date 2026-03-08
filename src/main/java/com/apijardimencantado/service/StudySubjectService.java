@@ -4,7 +4,7 @@ import com.apijardimencantado.model.database.StudySubject;
 import com.apijardimencantado.model.dto.request.StudySubjectRequest;
 import com.apijardimencantado.model.dto.response.StudySubjectResponse;
 import com.apijardimencantado.model.mapper.StudySubjectMapper;
-import com.apijardimencantado.repository.StudySubjectRepository;
+import com.apijardimencantado.repository.teacher.StudySubjectRepository;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,4 +1,4 @@
-package com.apijardimencantado.repository;
+package com.apijardimencantado.repository.classroom;
 
 import com.apijardimencantado.model.database.ClassroomGroup;
 import org.springframework.data.jpa.repository.JpaRepository;

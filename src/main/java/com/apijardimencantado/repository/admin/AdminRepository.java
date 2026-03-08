@@ -1,4 +1,4 @@
-package com.apijardimencantado.repository;
+package com.apijardimencantado.repository.admin;
 
 import com.apijardimencantado.model.database.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
