@@ -4,7 +4,7 @@ import com.apijardimencantado.model.database.Role;
 import com.apijardimencantado.model.dto.request.RoleRequest;
 import com.apijardimencantado.model.dto.response.RoleResponse;
 import com.apijardimencantado.model.mapper.RoleMapper;
-import com.apijardimencantado.repository.RoleRepository;
+import com.apijardimencantado.repository.person.RoleRepository;
 import org.springframework.stereotype.Service;
 
 @Service

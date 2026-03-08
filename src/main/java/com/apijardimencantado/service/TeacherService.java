@@ -6,7 +6,9 @@ import com.apijardimencantado.model.dto.response.TeacherResponse;
 import com.apijardimencantado.model.dto.response.TeacherSubjectResponse;
 import com.apijardimencantado.model.mapper.TeacherMapper;
 import com.apijardimencantado.model.mapper.TeacherSubjectMapper;
-import com.apijardimencantado.repository.*;
+import com.apijardimencantado.repository.person.PersonRepository;
+import com.apijardimencantado.repository.teacher.TeacherRepository;
+import com.apijardimencantado.repository.teacher.TeacherSubjectRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +22,7 @@ public class TeacherService extends BaseService<Teacher, Long, TeacherRequest, T
     private final TeacherSubjectMapper teacherSubjectMapper;
 
     public TeacherService(TeacherRepository repository, TeacherMapper mapper, PersonRepository personRepository,
-            TeacherSubjectRepository teacherSubjectRepository, TeacherSubjectMapper teacherSubjectMapper) {
+                          TeacherSubjectRepository teacherSubjectRepository, TeacherSubjectMapper teacherSubjectMapper) {
         super(repository, "Teacher");
         this.mapper = mapper;
         this.personRepository = personRepository;

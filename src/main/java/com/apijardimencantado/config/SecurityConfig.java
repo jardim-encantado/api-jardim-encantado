@@ -1,4 +1,4 @@
-package com.apijardimencantado.util;
+package com.apijardimencantado.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

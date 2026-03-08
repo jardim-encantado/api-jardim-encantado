@@ -1,4 +1,4 @@
-package com.apijardimencantado.repository;
+package com.apijardimencantado.repository.person;
 
 import com.apijardimencantado.model.database.Address;
 import org.springframework.data.jpa.repository.JpaRepository;

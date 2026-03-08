@@ -47,9 +47,9 @@ public class PersonController implements PersonContract {
 
     @Override
     @PostMapping("/login")
-    public ResponseEntity<PersonResponse> login(
+    public PersonResponse login(
             @RequestBody LoginRequest loginRequest
     ) {
-        return ResponseEntity.ok(personService.login(loginRequest));
+        return personService.login(loginRequest);
     }
 }
