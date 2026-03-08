@@ -1,5 +1,6 @@
 package com.apijardimencantado.controller.contract;
 
+import com.apijardimencantado.model.dto.request.LoginRequest;
 import com.apijardimencantado.model.dto.request.PersonRequest;
 import com.apijardimencantado.model.dto.response.PersonResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -83,5 +84,7 @@ public interface PersonContract {
             @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content)
     })
     @ResponseStatus(HttpStatus.OK)
-    PersonResponse update(Long id, PersonRequest personRequest);
+    ResponseEntity<PersonResponse> update(Long id, PersonRequest personRequest);
+
+    ResponseEntity<PersonResponse> login(LoginRequest loginRequest);
 }

@@ -1,10 +1,12 @@
 package com.apijardimencantado.controller;
 
 import com.apijardimencantado.controller.contract.PersonContract;
+import com.apijardimencantado.model.dto.request.LoginRequest;
 import com.apijardimencantado.model.dto.request.PersonRequest;
 import com.apijardimencantado.model.dto.response.PersonResponse;
 import com.apijardimencantado.service.PersonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,5 +43,13 @@ public class PersonController implements PersonContract {
             @RequestBody PersonRequest personRequest
     ) {
         return personService.update(id, personRequest);
+    }
+
+    @Override
+    @PostMapping("/login")
+    public ResponseEntity<PersonResponse> login(
+            @RequestBody LoginRequest loginRequest
+    ) {
+        return ResponseEntity.ok(personService.login(loginRequest));
     }
 }

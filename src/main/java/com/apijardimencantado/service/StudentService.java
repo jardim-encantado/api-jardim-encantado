@@ -1,15 +1,18 @@
 package com.apijardimencantado.service;
 
+import com.apijardimencantado.model.database.Person;
 import com.apijardimencantado.model.database.Student;
 import com.apijardimencantado.model.database.enrollment.Enrollment;
 import com.apijardimencantado.model.dto.request.StudentRequest;
 import com.apijardimencantado.model.dto.response.StudentResponse;
 import com.apijardimencantado.model.mapper.StudentMapper;
 import com.apijardimencantado.repository.PersonRepository;
+import com.apijardimencantado.repository.student.EnrollmentRepository;
 import com.apijardimencantado.repository.student.StudentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.function.Consumer;
 
 @Service
@@ -20,11 +23,35 @@ public class StudentService extends BaseService<Student, Long, StudentRequest, S
     private final StudentRepository studentRepository;
     private final PersonRepository personRepository;
 
-    public StudentService(StudentMapper mapper, StudentRepository studentRepository, PersonRepository personRepository) {
+    private final EnrollmentRepository enrollmentRepository;
+
+    public StudentService(StudentMapper mapper, StudentRepository studentRepository, PersonRepository personRepository, EnrollmentRepository enrollmentRepository) {
         super(studentRepository, "Student");
         this.mapper = mapper;
         this.studentRepository = studentRepository;
         this.personRepository = personRepository;
+        this.enrollmentRepository = enrollmentRepository;
+    }
+
+    @Override
+    public StudentResponse create(StudentRequest request) {
+        Person person = personRepository.findByCpf(request.cpf());
+        if (studentRepository.findByCpf(request.cpf()) != null){
+            throw new UnsupportedOperationException("Estudante já cadastrado");
+        }
+        if (person.getRole().getId() != 1){
+            throw new UnsupportedOperationException("Este usuário não foi pré cadastrado como estudante");
+        }
+        Enrollment enrollment = new Enrollment();
+        enrollment.setEnrollment_date(LocalDateTime.now());
+        enrollment.setCreate_date(LocalDateTime.now());
+        enrollment.setUpdate_date(LocalDateTime.now());
+        enrollmentRepository.save(enrollment);
+        Student student = new Student();
+        student.setPerson(person);
+        student.setEnrollment(enrollment);
+        studentRepository.save(student);
+        return toResponse(student);
     }
 
     @Override
