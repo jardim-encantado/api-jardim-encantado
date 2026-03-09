@@ -6,7 +6,7 @@
 
 O Jardim Encantado é uma escola de ensino fundamental dedicada ao desenvolvimento das crianças de forma leve, acolhedora e cheia de descobertas. A proposta da escola valoriza o aprendizado em contato com a natureza, incentivando a curiosidade, a imaginação e o respeito pelo mundo ao nosso redor.
 
-Esta API foi desenvolvida para auxiliar na organização da escola, permitindo o gerenciamento de salas, turmas, professores e a visualização dos responsáveis, contribuindo para que o ambiente educacional funcione de forma organizada e harmoniosa.
+Esta API foi desenvolvida para apoiar o funcionamento da plataforma da escola, permitindo gerenciar salas, turmas, professores e visualizar informações dos responsáveis. Com isso, contribui para que o ambiente educacional funcione de forma organizada, eficiente e harmoniosa.
 
 <br>
 
