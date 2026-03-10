@@ -15,7 +15,7 @@ public interface SchoolEventMapper {
     SchoolEvent toEntity(SchoolEventRequest request);
 
 
-    @Mapping(source="createdBy.id", target = "createdBy")
-    SchoolEventResponse toResponse(SchoolEvent schoolEvent);
+    @Mapping(source="person", target = "createdBy")
+    SchoolEventResponse toResponse(SchoolEvent schoolEvent, PersonResponse person);
 
 }

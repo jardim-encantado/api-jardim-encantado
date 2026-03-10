@@ -8,5 +8,7 @@ public record TeacherResponse(
     String firstName,
     String lastName,
     String email,
+    String photoUrl,
+    String phoneNumber,
     List<TeacherSubjectResponse> subjects
 ) {}

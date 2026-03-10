@@ -4,7 +4,9 @@ import com.apijardimencantado.model.database.Person;
 import com.apijardimencantado.model.database.SchoolEvent;
 import com.apijardimencantado.model.database.SchoolEventType;
 import com.apijardimencantado.model.dto.request.SchoolEventRequest;
+import com.apijardimencantado.model.dto.response.PersonResponse;
 import com.apijardimencantado.model.dto.response.SchoolEventResponse;
+import com.apijardimencantado.model.mapper.PersonMapper;
 import com.apijardimencantado.model.mapper.SchoolEventMapper;
 import com.apijardimencantado.repository.SchoolEventRepository;
 import com.apijardimencantado.repository.SchoolEventTypeRepository;
@@ -21,12 +23,15 @@ public class SchoolEventService extends BaseService<SchoolEvent, Long, SchoolEve
     private final SchoolEventMapper mapper;
     private final SchoolEventTypeRepository schoolEventTypeRepository;
     private final PersonRepository personRepository;
+    private final PersonMapper personMapper;
 
-    public SchoolEventService(SchoolEventRepository schoolEventRepository, SchoolEventMapper schoolEventMapper, SchoolEventTypeRepository schoolEventTypeRepository, PersonRepository personRepository) {
+
+    public SchoolEventService(SchoolEventRepository schoolEventRepository, SchoolEventMapper schoolEventMapper, SchoolEventTypeRepository schoolEventTypeRepository, PersonRepository personRepository, PersonMapper personMapper) {
         super(schoolEventRepository, "SchoolEvent");
         this.mapper = schoolEventMapper;
         this.schoolEventTypeRepository = schoolEventTypeRepository;
         this.personRepository = personRepository;
+        this.personMapper = personMapper;
     }
 
     @Transactional
@@ -36,16 +41,15 @@ public class SchoolEventService extends BaseService<SchoolEvent, Long, SchoolEve
         if (person == null || schoolEventType == null) {
             throw new EntityNotFoundException("Creator or event type not found");
         }
-        SchoolEvent schoolEvent = new SchoolEvent();
-        schoolEvent.setName(request.name());
-        schoolEvent.setDescription(request.description());
-        schoolEvent.setCreatedBy(person);
-        schoolEvent.setEventTypeId(schoolEventType);
-        schoolEvent.setEventDate(request.eventDate());
-        schoolEvent.setCreateDate(LocalDateTime.now());
-        schoolEvent.setUpdateDate(LocalDateTime.now());
+        SchoolEvent schoolEvent = SchoolEvent.builder()
+                .name(request.name())
+                .description(request.description())
+                .eventDate(request.eventDate())
+                .createdBy(person)
+                .eventTypeId(schoolEventType)
+                .build();
         repository.save(schoolEvent);
-        return mapper.toResponse(schoolEvent);
+        return toResponse(schoolEvent);
     }
 
     @Override
@@ -55,7 +59,8 @@ public class SchoolEventService extends BaseService<SchoolEvent, Long, SchoolEve
 
     @Override
     protected SchoolEventResponse toResponse(SchoolEvent entity) {
-        return mapper.toResponse(entity);
+        PersonResponse createdBy = personMapper.toResponse(entity.getCreatedBy(), null);
+        return mapper.toResponse(entity, createdBy);
     }
 
     @Override
