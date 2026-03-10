@@ -17,6 +17,8 @@ public interface TeacherMapper {
     @Mapping(target = "firstName", source = "teacher.person.firstName")
     @Mapping(target = "lastName", source = "teacher.person.lastName")
     @Mapping(target = "email", source = "teacher.person.email")
+    @Mapping(target = "phoneNumber", source = "teacher.person.phoneNumber")
+    @Mapping(target = "photoUrl", source = "teacher.person.photoUrl")
     @Mapping(target = "subjects", source = "subjects")
     TeacherResponse toResponse(Teacher teacher, List<TeacherSubjectResponse> subjects);
 }
