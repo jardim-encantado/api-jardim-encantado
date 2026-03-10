@@ -1,6 +1,5 @@
 package com.apijardimencantado.model.dto.response;
 
-import com.apijardimencantado.model.database.Person;
 import com.apijardimencantado.model.database.SchoolEventType;
 import java.time.LocalDateTime;
 public record SchoolEventResponse(
@@ -12,7 +11,7 @@ public record SchoolEventResponse(
 
         LocalDateTime eventDate,
 
-        Person createdBy,
+        Long createdBy,
         LocalDateTime createDate,
 
         LocalDateTime updateDate,
