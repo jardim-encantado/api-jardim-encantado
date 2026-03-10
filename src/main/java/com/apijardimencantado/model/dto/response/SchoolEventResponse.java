@@ -11,7 +11,8 @@ public record SchoolEventResponse(
 
         LocalDateTime eventDate,
 
-        Long createdBy,
+        PersonResponse createdBy,
+
         LocalDateTime createDate,
 
         LocalDateTime updateDate,

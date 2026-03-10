@@ -8,5 +8,7 @@ public record StudentResponse(
         String firstName,
         String lastName,
         String email,
+        String photoUrl,
+        String phoneNumber,
         Enrollment enrollment
 ) { }
