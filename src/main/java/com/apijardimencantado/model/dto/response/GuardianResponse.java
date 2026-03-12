@@ -8,7 +8,9 @@ public record GuardianResponse(
         String firstName,
         String lastName,
         String email,
-
+        String photoUrl,
+        String cpf,
+        String phoneNumber,
         List<StudentResponse> students
 ) {
 

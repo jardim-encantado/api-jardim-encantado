@@ -20,5 +20,8 @@ public interface GuardianMapper {
     @Mapping(source = "guardian.person.lastName", target = "lastName")
     @Mapping(source = "guardian.person.email", target = "email")
     @Mapping(source = "students", target = "students")
+    @Mapping(source = "guardian.person.photoUrl",target = "photoUrl")
+    @Mapping(source = "guardian.person.cpf", target = "cpf")
+    @Mapping(source = "guardian.person.phoneNumber", target = "phoneNumber")
     GuardianResponse toResponse(Guardian guardian, List<StudentResponse> students);
 }

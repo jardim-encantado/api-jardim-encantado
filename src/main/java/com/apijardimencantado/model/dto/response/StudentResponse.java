@@ -10,5 +10,6 @@ public record StudentResponse(
         String email,
         String photoUrl,
         String phoneNumber,
+        String cpf,
         Enrollment enrollment
 ) { }
