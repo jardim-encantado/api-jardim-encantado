@@ -5,6 +5,8 @@ public record PersonResponse(
         String firstName,
         String lastName,
         String photoUrl,
+        String cpf,
+        String phoneNumber,
         Integer roleId,
         String roleName,
         AddressResponse address

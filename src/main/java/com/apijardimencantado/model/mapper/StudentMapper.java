@@ -18,5 +18,6 @@ public interface StudentMapper {
     @Mapping(target = "email", source = "student.person.email")
     @Mapping(target = "phoneNumber", source = "student.person.phoneNumber")
     @Mapping(target = "photoUrl", source = "student.person.photoUrl")
+    @Mapping(target = "cpf", source = "student.person.cpf")
     StudentResponse toResponse(Student student);
 }

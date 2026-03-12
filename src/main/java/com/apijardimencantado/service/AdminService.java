@@ -46,7 +46,10 @@ public class AdminService extends BaseService<
     protected AdminResponse toResponse(Admin entity) {
         return new AdminResponse(
                 entity.getAdminId(),
-                entity.getPerson().getId()
+                entity.getPerson().getId(),
+                entity.getPerson().getPhotoUrl(),
+                entity.getPerson().getCpf(),
+                entity.getPerson().getPhotoUrl()
         );
     }
 
