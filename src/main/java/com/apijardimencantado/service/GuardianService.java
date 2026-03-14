@@ -38,7 +38,7 @@ public class GuardianService extends BaseService<Guardian, Long, GuardianRequest
     }
 
     public GuardianResponse findByCpf(String cpf) {
-        return toResponse(repository.findByCpf(cpf)
+        return toResponse(repository.findByPerson_Cpf(cpf)
                 .orElseThrow(() -> new EntityNotFoundException("Person with CPF" + cpf + "not found")));
     }
 

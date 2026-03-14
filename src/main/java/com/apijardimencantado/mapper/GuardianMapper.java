@@ -1,7 +1,6 @@
 package com.apijardimencantado.mapper;
 
 import com.apijardimencantado.model.database.Guardian;
-import com.apijardimencantado.model.database.Student;
 import com.apijardimencantado.model.dto.request.GuardianRequest;
 import com.apijardimencantado.model.dto.response.GuardianResponse;
 import com.apijardimencantado.model.dto.response.StudentResponse;

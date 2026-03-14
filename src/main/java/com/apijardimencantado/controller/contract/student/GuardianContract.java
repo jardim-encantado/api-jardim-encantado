@@ -86,4 +86,22 @@ public interface GuardianContract {
     @DeleteMapping("/{guardianId}/students/{studentId}")
     @ResponseStatus(HttpStatus.OK)
     void removeStudent(@PathVariable Long guardianId, @PathVariable Long studentId);
+
+    @Operation(
+            summary = "Find guardian by CPF",
+            description = "Retrieve a specific guardian by its CPF"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Guardian found successfully",
+                    content = @Content(schema = @Schema(implementation = GuardianResponse.class))
+            ),
+            @ApiResponse(responseCode = "404", description = "Guardian not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content)
+    })
+    @GetMapping("/cpf/{cpf}")
+    @ResponseStatus(HttpStatus.OK)
+    GuardianResponse findByCpf(@PathVariable String cpf);
 }

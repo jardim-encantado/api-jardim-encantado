@@ -47,4 +47,9 @@ public class GuardianController implements GuardianContract {
     public void removeStudent(@PathVariable Long guardianId, @PathVariable Long studentId) {
         guardianService.removeStudent(guardianId, studentId);
     }
+
+    @Override
+    public GuardianResponse findByCpf(@PathVariable String cpf) {
+        return guardianService.findByCpf(cpf);
+    }
 }

@@ -21,10 +21,8 @@ public class SchoolEventTypeService {
         this.schoolEventTypeMapper = schoolEventTypeMapper;
     }
     public SchoolEventTypeResponse getById(Long id) {
-        SchoolEventType schoolEventType = schoolEventTypeRepository.findById(id).get();
-        if (schoolEventType == null) {
-            throw new EntityNotFoundException("Event type not found");
-        }
+        SchoolEventType schoolEventType = schoolEventTypeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("SchoolEventType not found with id: " + id));
         return schoolEventTypeMapper.toResponse(schoolEventType);
     }
 
