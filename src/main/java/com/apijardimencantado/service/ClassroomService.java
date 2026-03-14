@@ -3,7 +3,7 @@ package com.apijardimencantado.service;
 import com.apijardimencantado.model.database.Classroom;
 import com.apijardimencantado.model.dto.request.ClassroomRequest;
 import com.apijardimencantado.model.dto.response.ClassroomResponse;
-import com.apijardimencantado.model.mapper.ClassroomMapper;
+import com.apijardimencantado.mapper.ClassroomMapper;
 import com.apijardimencantado.repository.classroom.ClassroomRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;

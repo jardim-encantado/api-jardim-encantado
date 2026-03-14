@@ -3,7 +3,7 @@ package com.apijardimencantado.service;
 import com.apijardimencantado.model.database.*;
 import com.apijardimencantado.model.dto.request.TeacherSubjectRequest;
 import com.apijardimencantado.model.dto.response.TeacherSubjectResponse;
-import com.apijardimencantado.model.mapper.TeacherSubjectMapper;
+import com.apijardimencantado.mapper.TeacherSubjectMapper;
 import com.apijardimencantado.repository.teacher.TeacherSubjectRepository;
 import org.springframework.stereotype.Service;
 

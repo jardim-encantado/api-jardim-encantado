@@ -6,16 +6,14 @@ import com.apijardimencantado.model.database.SchoolEventType;
 import com.apijardimencantado.model.dto.request.SchoolEventRequest;
 import com.apijardimencantado.model.dto.response.PersonResponse;
 import com.apijardimencantado.model.dto.response.SchoolEventResponse;
-import com.apijardimencantado.model.mapper.PersonMapper;
-import com.apijardimencantado.model.mapper.SchoolEventMapper;
+import com.apijardimencantado.mapper.PersonMapper;
+import com.apijardimencantado.mapper.SchoolEventMapper;
 import com.apijardimencantado.repository.SchoolEventRepository;
 import com.apijardimencantado.repository.SchoolEventTypeRepository;
 import com.apijardimencantado.repository.person.PersonRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 public class SchoolEventService extends BaseService<SchoolEvent, Long, SchoolEventRequest, SchoolEventResponse>{

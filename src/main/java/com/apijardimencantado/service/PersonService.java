@@ -7,15 +7,14 @@ import com.apijardimencantado.model.dto.request.LoginRequest;
 import com.apijardimencantado.model.dto.request.PersonRequest;
 import com.apijardimencantado.model.dto.response.AddressResponse;
 import com.apijardimencantado.model.dto.response.PersonResponse;
-import com.apijardimencantado.model.mapper.AddressMapper;
-import com.apijardimencantado.model.mapper.PersonMapper;
+import com.apijardimencantado.mapper.AddressMapper;
+import com.apijardimencantado.mapper.PersonMapper;
 import com.apijardimencantado.repository.person.AddressRepository;
 import com.apijardimencantado.repository.person.PersonRepository;
 import com.apijardimencantado.repository.person.RoleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.repository.Repository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

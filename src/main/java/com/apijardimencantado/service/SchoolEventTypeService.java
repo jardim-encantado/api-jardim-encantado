@@ -2,7 +2,7 @@ package com.apijardimencantado.service;
 
 import com.apijardimencantado.model.database.SchoolEventType;
 import com.apijardimencantado.model.dto.response.SchoolEventTypeResponse;
-import com.apijardimencantado.model.mapper.SchoolEventTypeMapper;
+import com.apijardimencantado.mapper.SchoolEventTypeMapper;
 import com.apijardimencantado.repository.SchoolEventTypeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;

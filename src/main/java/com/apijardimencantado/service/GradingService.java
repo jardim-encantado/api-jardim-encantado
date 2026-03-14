@@ -6,11 +6,10 @@ import com.apijardimencantado.model.database.StudySubject;
 import com.apijardimencantado.model.database.Teacher;
 import com.apijardimencantado.model.dto.request.GradingRequest;
 import com.apijardimencantado.model.dto.response.GradingResponse;
-import com.apijardimencantado.model.dto.response.TeacherSubjectResponse;
-import com.apijardimencantado.model.mapper.GradingMapper;
-import com.apijardimencantado.model.mapper.StudentMapper;
-import com.apijardimencantado.model.mapper.StudySubjectMapper;
-import com.apijardimencantado.model.mapper.TeacherMapper;
+import com.apijardimencantado.mapper.GradingMapper;
+import com.apijardimencantado.mapper.StudentMapper;
+import com.apijardimencantado.mapper.StudySubjectMapper;
+import com.apijardimencantado.mapper.TeacherMapper;
 import com.apijardimencantado.repository.grading.GradingRepository;
 import com.apijardimencantado.repository.student.StudentRepository;
 import com.apijardimencantado.repository.teacher.StudySubjectRepository;
@@ -19,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Slf4j
 @Service
