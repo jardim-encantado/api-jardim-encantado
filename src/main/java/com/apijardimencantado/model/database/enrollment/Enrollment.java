@@ -31,7 +31,7 @@ public class Enrollment {
 
     @Builder.Default
     @Convert(converter = EnrollmentStatus.Convert.class)
-    private EnrollmentStatus status = EnrollmentStatus.PRE_ENROLLMENT;
+    private EnrollmentStatus status = EnrollmentStatus.ENROLLED;
 
     @Transient
     private transient EnrollmentState state = null;
