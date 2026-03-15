@@ -25,7 +25,7 @@ public class SchoolEvent {
     private LocalDateTime eventDate;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "created_by", nullable = false)
     private Person createdBy;
 
     private LocalDateTime createDate;
@@ -34,6 +34,6 @@ public class SchoolEvent {
     private LocalDateTime updateDate;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "event_type_id", nullable = false)
     private SchoolEventType eventTypeId;
 }
