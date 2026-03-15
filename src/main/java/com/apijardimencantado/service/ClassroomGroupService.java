@@ -5,7 +5,7 @@ import com.apijardimencantado.model.database.ClassroomGroup;
 import com.apijardimencantado.model.database.Teacher;
 import com.apijardimencantado.model.dto.request.ClassroomGroupRequest;
 import com.apijardimencantado.model.dto.response.ClassroomGroupResponse;
-import com.apijardimencantado.model.mapper.ClassroomGroupMapper;
+import com.apijardimencantado.mapper.ClassroomGroupMapper;
 import com.apijardimencantado.repository.classroom.ClassroomGroupRepository;
 import com.apijardimencantado.repository.classroom.ClassroomRepository;
 import com.apijardimencantado.repository.teacher.TeacherRepository;

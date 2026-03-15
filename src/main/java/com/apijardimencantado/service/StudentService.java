@@ -5,7 +5,7 @@ import com.apijardimencantado.model.database.Student;
 import com.apijardimencantado.model.database.enrollment.Enrollment;
 import com.apijardimencantado.model.dto.request.StudentRequest;
 import com.apijardimencantado.model.dto.response.StudentResponse;
-import com.apijardimencantado.model.mapper.StudentMapper;
+import com.apijardimencantado.mapper.StudentMapper;
 import com.apijardimencantado.repository.person.PersonRepository;
 import com.apijardimencantado.repository.student.EnrollmentRepository;
 import com.apijardimencantado.repository.student.StudentRepository;

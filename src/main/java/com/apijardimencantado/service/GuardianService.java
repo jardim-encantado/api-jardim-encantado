@@ -5,10 +5,11 @@ import com.apijardimencantado.model.database.Student;
 import com.apijardimencantado.model.dto.request.GuardianRequest;
 import com.apijardimencantado.model.dto.response.GuardianResponse;
 import com.apijardimencantado.model.dto.response.StudentResponse;
-import com.apijardimencantado.model.mapper.GuardianMapper;
-import com.apijardimencantado.model.mapper.StudentMapper;
+import com.apijardimencantado.mapper.GuardianMapper;
+import com.apijardimencantado.mapper.StudentMapper;
 import com.apijardimencantado.repository.person.PersonRepository;
 import com.apijardimencantado.repository.student.GuardianRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.function.Consumer;
 @Service
 public class GuardianService extends BaseService<Guardian, Long, GuardianRequest, GuardianResponse> {
 
+    private final GuardianRepository repository;
     private final StudentMapper studentMapper;
     private final GuardianMapper mapper;
     private final PersonRepository personRepository;
@@ -29,9 +31,15 @@ public class GuardianService extends BaseService<Guardian, Long, GuardianRequest
                            StudentService studentService) {
         super(repository, "Guardian");
         this.mapper = mapper;
+        this.repository = repository;
         this.personRepository = personRepository;
         this.studentMapper = studentMapper;
         this.studentService = studentService;
+    }
+
+    public GuardianResponse findByCpf(String cpf) {
+        return toResponse(repository.findByPerson_Cpf(cpf)
+                .orElseThrow(() -> new EntityNotFoundException("Person with CPF" + cpf + "not found")));
     }
 
     @Override
