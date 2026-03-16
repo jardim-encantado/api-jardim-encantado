@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -30,6 +31,7 @@ public class GradingService extends BaseService<Grading, Long, GradingRequest, G
     private final StudentRepository studentRepository;
     private final StudySubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
+    private final GradingRepository repository;
 
     public GradingService(
             GradingRepository repository,
@@ -49,6 +51,14 @@ public class GradingService extends BaseService<Grading, Long, GradingRequest, G
         this.studentRepository = studentRepository;
         this.subjectRepository = subjectRepository;
         this.teacherRepository = teacherRepository;
+        this.repository = repository;
+    }
+
+    public List<GradingResponse> findByStudentId(Long personId) {
+        return repository.findByStudent_Id(personId)
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
     @Override

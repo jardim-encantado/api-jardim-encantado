@@ -64,6 +64,22 @@ public interface GradingContract {
     GradingResponse getById(Long id);
 
     @Operation(
+            summary = "Find grade by Student ID",
+            description = "Retrieve a specific grade by student ID"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Grade found successfully",
+                    content = @Content(schema = @Schema(implementation = GradingResponse.class))
+            ),
+            @ApiResponse(responseCode = "404", description = "Grade not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
+    @ResponseStatus(HttpStatus.OK)
+    List<GradingResponse> getByStudentId(Long id);
+
+    @Operation(
             summary = "Update grade",
             description = "Update an existing grade"
     )
