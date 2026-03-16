@@ -35,6 +35,12 @@ public class GradingController implements GradingContract {
     }
 
     @Override
+    @GetMapping("/by-student/{studentId}")
+    public List<GradingResponse> getByStudentId(@PathVariable Long studentId) {
+        return gradingService.findByStudentId(studentId);
+    }
+
+    @Override
     @PutMapping("/{id}")
     public GradingResponse update(
             @PathVariable Long id,
