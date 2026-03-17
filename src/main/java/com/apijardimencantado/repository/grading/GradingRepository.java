@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface GradingRepository extends JpaRepository<Grading, Long> {
 
-    List<Grading> findByStudent_Id(Long studentId);
+    List<Grading> findByStudent_Person_Id(Long studentId);
 
 }
