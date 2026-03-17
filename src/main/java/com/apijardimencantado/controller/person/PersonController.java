@@ -45,7 +45,7 @@ public class PersonController implements PersonContract {
     }
 
     @Override
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     public PersonResponse login(
             @RequestBody LoginRequest loginRequest
     ) {
