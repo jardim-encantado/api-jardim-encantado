@@ -51,11 +51,11 @@ public class GuardianService extends BaseService<Guardian, Long, GuardianRequest
 
     @Override
     protected GuardianResponse toResponse(Guardian entity) {
-        List<StudentResponse> students = entity.getStudents()
-                .stream()
-                .map(studentMapper::toResponse)
-                .toList();
-
+        List<StudentResponse> students = entity.getStudents() == null
+                ? List.of()
+                : entity.getStudents().stream()
+                  .map(studentMapper::toResponse)
+                  .toList();
         return mapper.toResponse(entity, students);
     }
 

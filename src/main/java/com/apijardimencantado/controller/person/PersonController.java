@@ -24,6 +24,14 @@ public class PersonController implements PersonContract {
     }
 
     @Override
+    @PostMapping("/login")
+    public PersonResponse login(
+            @RequestBody LoginRequest loginRequest
+    ) {
+        return personService.login(loginRequest);
+    }
+
+    @Override
     @GetMapping
     public List<PersonResponse> getAll() {
         return personService.getAll();
@@ -42,13 +50,5 @@ public class PersonController implements PersonContract {
             @RequestBody PersonRequest personRequest
     ) {
         return personService.update(id, personRequest);
-    }
-
-    @Override
-    @PostMapping("/login")
-    public PersonResponse login(
-            @RequestBody LoginRequest loginRequest
-    ) {
-        return personService.login(loginRequest);
     }
 }
