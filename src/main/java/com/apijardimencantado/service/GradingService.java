@@ -54,8 +54,8 @@ public class GradingService extends BaseService<Grading, Long, GradingRequest, G
         this.repository = repository;
     }
 
-    public List<GradingResponse> findByStudentId(Long personId) {
-        return repository.findByStudent_Id(personId)
+    public List<GradingResponse> findByPersonId(Long personId) {
+        return repository.findByStudent_Person_Id(personId)
                 .stream()
                 .map(this::toResponse)
                 .toList();

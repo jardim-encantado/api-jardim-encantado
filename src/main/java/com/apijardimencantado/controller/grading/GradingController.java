@@ -35,9 +35,9 @@ public class GradingController implements GradingContract {
     }
 
     @Override
-    @GetMapping("/by-student/{studentId}")
-    public List<GradingResponse> getByStudentId(@PathVariable Long studentId) {
-        return gradingService.findByStudentId(studentId);
+    @GetMapping("/by-person/{personId}")
+    public List<GradingResponse> getByPersonId(@PathVariable Long studentId) {
+        return gradingService.findByPersonId(studentId);
     }
 
     @Override

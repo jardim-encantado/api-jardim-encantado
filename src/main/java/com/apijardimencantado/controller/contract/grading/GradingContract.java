@@ -77,7 +77,7 @@ public interface GradingContract {
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
     })
     @ResponseStatus(HttpStatus.OK)
-    List<GradingResponse> getByStudentId(Long id);
+    List<GradingResponse> getByPersonId(Long id);
 
     @Operation(
             summary = "Update grade",
