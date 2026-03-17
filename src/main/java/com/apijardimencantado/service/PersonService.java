@@ -46,7 +46,10 @@ public class PersonService extends BaseService<Person, Long, PersonRequest, Pers
     @Transactional
     public PersonResponse create(PersonRequest request){
             log.info("[PersonService] [create] CREATE");
-            Person person = repository.save(toEntity(request));
+
+            Person person = toEntity(request);
+            person.setPassword(passwordEncoder.encode(person.getPassword()));
+            repository.save(person);
             Address address = addressMapper.toEntity(request.address());
             address.setPerson(person);
             addressRepository.save(address);
