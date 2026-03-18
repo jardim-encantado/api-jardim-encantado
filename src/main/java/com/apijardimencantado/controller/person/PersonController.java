@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/person")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class PersonController implements PersonContract {
 
@@ -32,19 +32,19 @@ public class PersonController implements PersonContract {
     }
 
     @Override
-    @GetMapping
+    @GetMapping("/person")
     public List<PersonResponse> getAll() {
         return personService.getAll();
     }
 
     @Override
-    @GetMapping("/{id}")
+    @GetMapping("/person/{id}")
     public PersonResponse getById(@PathVariable Long id) {
         return personService.getById(id);
     }
 
     @Override
-    @PutMapping("/{id}")
+    @PutMapping("/person/{id}")
     public PersonResponse update(
             @PathVariable Long id,
             @RequestBody PersonRequest personRequest
