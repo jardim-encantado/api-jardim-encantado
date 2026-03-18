@@ -37,5 +37,9 @@ public class SchoolEvent {
 
     @ManyToOne
     @JoinColumn(name = "event_type_id", nullable = false)
-    private SchoolEventType eventTypeId;
+    private SchoolEventType eventType;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
 }
