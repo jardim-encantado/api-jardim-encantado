@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 public class SchoolEventService extends BaseService<SchoolEvent, Long, SchoolEventRequest, SchoolEventResponse>{
 
     private final SchoolEventMapper mapper;
+    private final SchoolEventRepository repository;
     private final SchoolEventTypeRepository schoolEventTypeRepository;
     private final PersonRepository personRepository;
     private final PersonMapper personMapper;
@@ -43,6 +44,7 @@ public class SchoolEventService extends BaseService<SchoolEvent, Long, SchoolEve
         this.personMapper = personMapper;
         this.studentRepository = studentRepository;
         this.studentMapper = studentMapper;
+        this.repository = schoolEventRepository;
     }
 
     @Transactional
@@ -66,6 +68,10 @@ public class SchoolEventService extends BaseService<SchoolEvent, Long, SchoolEve
                 .build();
         repository.save(schoolEvent);
         return toResponse(schoolEvent);
+    }
+
+    public SchoolEventResponse findByStudentId(Long studentId) {
+        return toResponse(repository.findByStudent_Id(studentId));
     }
 
     @Override
