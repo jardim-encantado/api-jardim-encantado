@@ -1,16 +1,15 @@
 package com.apijardimencantado.service;
 
+import com.apijardimencantado.mapper.*;
 import com.apijardimencantado.model.database.Grading;
 import com.apijardimencantado.model.database.Student;
 import com.apijardimencantado.model.database.StudySubject;
 import com.apijardimencantado.model.database.Teacher;
 import com.apijardimencantado.model.dto.request.GradingRequest;
+import com.apijardimencantado.model.dto.response.AddressResponse;
 import com.apijardimencantado.model.dto.response.GradingResponse;
-import com.apijardimencantado.mapper.GradingMapper;
-import com.apijardimencantado.mapper.StudentMapper;
-import com.apijardimencantado.mapper.StudySubjectMapper;
-import com.apijardimencantado.mapper.TeacherMapper;
 import com.apijardimencantado.repository.grading.GradingRepository;
+import com.apijardimencantado.repository.person.AddressRepository;
 import com.apijardimencantado.repository.student.StudentRepository;
 import com.apijardimencantado.repository.teacher.StudySubjectRepository;
 import com.apijardimencantado.repository.teacher.TeacherRepository;
@@ -32,6 +31,8 @@ public class GradingService extends BaseService<Grading, Long, GradingRequest, G
     private final StudySubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
     private final GradingRepository repository;
+    private final AddressMapper addressMapper;
+    private final AddressRepository addressRepository;
 
     public GradingService(
             GradingRepository repository,
@@ -41,7 +42,9 @@ public class GradingService extends BaseService<Grading, Long, GradingRequest, G
             StudySubjectMapper subjectMapper,
             StudentRepository studentRepository,
             StudySubjectRepository subjectRepository,
-            TeacherRepository teacherRepository
+            TeacherRepository teacherRepository,
+            AddressMapper addressMapper,
+            AddressRepository addressRepository
     ) {
         super(repository, "Grading");
         this.mapper = mapper;
@@ -52,6 +55,8 @@ public class GradingService extends BaseService<Grading, Long, GradingRequest, G
         this.subjectRepository = subjectRepository;
         this.teacherRepository = teacherRepository;
         this.repository = repository;
+        this.addressMapper = addressMapper;
+        this.addressRepository = addressRepository;
     }
 
     public List<GradingResponse> findByPersonId(Long personId) {
@@ -87,7 +92,7 @@ public class GradingService extends BaseService<Grading, Long, GradingRequest, G
     protected GradingResponse toResponse(Grading entity) {
 
         return mapper.toResponse(entity,
-                studentMapper.toResponse(entity.getStudent()),
+                studentMapper.toResponse(entity.getStudent(), getAddress(entity.getStudent().getPerson().getId())),
                 subjectMapper.toResponse(entity.getSubject()),
                 teacherMapper.toResponse(entity.getGivenByTeacherId(), null));
     }
@@ -113,5 +118,10 @@ public class GradingService extends BaseService<Grading, Long, GradingRequest, G
 
     private Integer getCurrentBimonthly() {
         return (LocalDate.now().getMonthValue() - 1) / 3 + 1;
+    }
+
+    private AddressResponse getAddress(Long personId) {
+        return addressMapper.toResponse(
+                addressRepository.findAddressByPerson_Id(personId));
     }
 }
