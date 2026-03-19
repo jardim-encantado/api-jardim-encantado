@@ -1,12 +1,15 @@
 package com.apijardimencantado.service;
 
+import com.apijardimencantado.mapper.AddressMapper;
 import com.apijardimencantado.model.database.Guardian;
 import com.apijardimencantado.model.database.Student;
 import com.apijardimencantado.model.dto.request.GuardianRequest;
+import com.apijardimencantado.model.dto.response.AddressResponse;
 import com.apijardimencantado.model.dto.response.GuardianResponse;
 import com.apijardimencantado.model.dto.response.StudentResponse;
 import com.apijardimencantado.mapper.GuardianMapper;
 import com.apijardimencantado.mapper.StudentMapper;
+import com.apijardimencantado.repository.person.AddressRepository;
 import com.apijardimencantado.repository.person.PersonRepository;
 import com.apijardimencantado.repository.student.GuardianRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,18 +26,24 @@ public class GuardianService extends BaseService<Guardian, Long, GuardianRequest
     private final GuardianMapper mapper;
     private final PersonRepository personRepository;
     private final StudentService studentService;
+    private final AddressMapper addressMapper;
+    private final AddressRepository addressRepository;
 
     public GuardianService(GuardianRepository repository,
                            GuardianMapper mapper,
                            PersonRepository personRepository,
                            StudentMapper studentMapper,
-                           StudentService studentService) {
+                           StudentService studentService,
+                           AddressMapper addressMapper,
+                           AddressRepository addressRepository) {
         super(repository, "Guardian");
         this.mapper = mapper;
         this.repository = repository;
         this.personRepository = personRepository;
         this.studentMapper = studentMapper;
         this.studentService = studentService;
+        this.addressMapper = addressMapper;
+        this.addressRepository = addressRepository;
     }
 
     public GuardianResponse findByCpf(String cpf) {
@@ -54,9 +63,8 @@ public class GuardianService extends BaseService<Guardian, Long, GuardianRequest
     protected GuardianResponse toResponse(Guardian entity) {
         List<StudentResponse> students = entity.getStudents() == null
                 ? List.of()
-                : entity.getStudents().stream()
-                  .map(studentMapper::toResponse)
-                  .toList();
+                : getStudents(entity.getId());
+
         return mapper.toResponse(entity, students);
     }
 
@@ -68,7 +76,10 @@ public class GuardianService extends BaseService<Guardian, Long, GuardianRequest
     public List<StudentResponse> getStudents(Long guardianId) {
         Guardian guardian = getModelById(guardianId);
         return guardian.getStudents().stream()
-                .map(studentMapper::toResponse)
+                .map(student -> studentMapper.toResponse(
+                        student,
+                        getAddress(student.getPerson().getId())
+                ))
                 .toList();
     }
 
@@ -90,5 +101,10 @@ public class GuardianService extends BaseService<Guardian, Long, GuardianRequest
             Student student = studentService.getModelById(studentId);
             students.remove(student);
         });
+    }
+
+    private AddressResponse getAddress(Long personId) {
+        return addressMapper.toResponse(
+                addressRepository.findAddressByPerson_Id(personId));
     }
 }
