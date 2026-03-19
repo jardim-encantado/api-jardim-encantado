@@ -19,6 +19,8 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SchoolEventService extends BaseService<SchoolEvent, Long, SchoolEventRequest, SchoolEventResponse>{
 
@@ -70,8 +72,10 @@ public class SchoolEventService extends BaseService<SchoolEvent, Long, SchoolEve
         return toResponse(schoolEvent);
     }
 
-    public SchoolEventResponse findByStudentId(Long studentId) {
-        return toResponse(repository.findByStudent_Id(studentId));
+    public List<SchoolEventResponse> findByStudentId(Long studentId) {
+        return repository.findByStudent_Id(studentId)
+                .stream().map(this::toResponse)
+                .toList();;
     }
 
     @Override

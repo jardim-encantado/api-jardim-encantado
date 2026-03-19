@@ -37,6 +37,11 @@ public class SchoolEventController implements SchoolEventContract {
         return ResponseEntity.ok(schoolEventService.getById(id));
     }
 
+    @GetMapping("by-student/{id}")
+    public ResponseEntity<List<SchoolEventResponse>> getByStudentId(@PathVariable Long id) {
+        return ResponseEntity.ok(schoolEventService.findByStudentId(id));
+    }
+
     @Override
     @PutMapping("/{id}")
     public ResponseEntity<SchoolEventResponse> update(
