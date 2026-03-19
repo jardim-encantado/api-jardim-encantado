@@ -9,6 +9,7 @@ import com.apijardimencantado.mapper.TeacherSubjectMapper;
 import com.apijardimencantado.repository.person.PersonRepository;
 import com.apijardimencantado.repository.teacher.TeacherRepository;
 import com.apijardimencantado.repository.teacher.TeacherSubjectRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,7 +33,8 @@ public class TeacherService extends BaseService<Teacher, Long, TeacherRequest, T
 
     @Override
     public Teacher toEntity(TeacherRequest request) {
-        Person person = personRepository.findByCpf(request.cpf());
+        Person person = personRepository.findByCpf(request.cpf())
+                .orElseThrow(() -> new EntityNotFoundException("Person not found"));
         return Teacher.builder()
                 .person(person)
                 .build();

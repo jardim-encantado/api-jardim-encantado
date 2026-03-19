@@ -40,6 +40,6 @@ public class SchoolEvent {
     private SchoolEventType eventType;
 
     @ManyToOne
-    @JoinColumn(name = "student_id", nullable = false)
+    @JoinColumn(name = "student_id", nullable = true)
     private Student student;
 }

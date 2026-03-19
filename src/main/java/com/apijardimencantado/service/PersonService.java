@@ -58,7 +58,8 @@ public class PersonService extends BaseService<Person, Long, PersonRequest, Pers
     }
 
     public PersonResponse login(LoginRequest request) {
-        Person person = repository.findByCpf(request.cpf());
+        Person person = repository.findByCpf(request.cpf())
+                .orElseThrow(() -> new EntityNotFoundException("Person not found"));
         if (person == null) {
             throw new EntityNotFoundException("Person not found");
         }

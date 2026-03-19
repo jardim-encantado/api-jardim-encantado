@@ -6,6 +6,7 @@ import com.apijardimencantado.model.database.Student;
 import com.apijardimencantado.model.dto.request.SchoolEventRequest;
 import com.apijardimencantado.model.dto.response.PersonResponse;
 import com.apijardimencantado.model.dto.response.SchoolEventResponse;
+import com.apijardimencantado.model.dto.response.StudentResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -20,6 +21,7 @@ public interface SchoolEventMapper {
 
 
     @Mapping(source="person", target = "createdBy")
-    SchoolEventResponse toResponse(SchoolEvent schoolEvent, PersonResponse person);
+    @Mapping(source = "student", target = "student")
+    SchoolEventResponse toResponse(SchoolEvent schoolEvent, PersonResponse person, StudentResponse student);
 
 }

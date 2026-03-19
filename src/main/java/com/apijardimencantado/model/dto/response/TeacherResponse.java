@@ -10,5 +10,6 @@ public record TeacherResponse(
     String email,
     String photoUrl,
     String phoneNumber,
+    String cpf,
     List<TeacherSubjectResponse> subjects
 ) {}
