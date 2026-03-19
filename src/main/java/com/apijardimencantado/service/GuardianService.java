@@ -45,7 +45,8 @@ public class GuardianService extends BaseService<Guardian, Long, GuardianRequest
     @Override
     protected Guardian toEntity(GuardianRequest request) {
         return Guardian.builder()
-                .person(personRepository.findByCpf(request.cpf()))
+                .person(personRepository.findByCpf(request.cpf())
+                        .orElseThrow(() -> new EntityNotFoundException("Person not found")))
                 .build();
     }
 

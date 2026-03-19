@@ -1,5 +1,6 @@
 package com.apijardimencantado.service;
 
+import com.apijardimencantado.mapper.StudentMapper;
 import com.apijardimencantado.model.database.Person;
 import com.apijardimencantado.model.database.SchoolEvent;
 import com.apijardimencantado.model.database.SchoolEventType;
@@ -9,6 +10,7 @@ import com.apijardimencantado.model.dto.response.PersonResponse;
 import com.apijardimencantado.model.dto.response.SchoolEventResponse;
 import com.apijardimencantado.mapper.PersonMapper;
 import com.apijardimencantado.mapper.SchoolEventMapper;
+import com.apijardimencantado.model.dto.response.StudentResponse;
 import com.apijardimencantado.repository.SchoolEventRepository;
 import com.apijardimencantado.repository.SchoolEventTypeRepository;
 import com.apijardimencantado.repository.person.PersonRepository;
@@ -24,7 +26,8 @@ public class SchoolEventService extends BaseService<SchoolEvent, Long, SchoolEve
     private final SchoolEventTypeRepository schoolEventTypeRepository;
     private final PersonRepository personRepository;
     private final PersonMapper personMapper;
-    private StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
+    private final StudentMapper studentMapper;
 
 
     public SchoolEventService(SchoolEventRepository schoolEventRepository,
@@ -32,21 +35,26 @@ public class SchoolEventService extends BaseService<SchoolEvent, Long, SchoolEve
                               SchoolEventTypeRepository schoolEventTypeRepository,
                               PersonRepository personRepository,
                               PersonMapper personMapper,
-                              StudentRepository studentRepository) {
+                              StudentRepository studentRepository, StudentMapper studentMapper) {
         super(schoolEventRepository, "SchoolEvent");
         this.mapper = schoolEventMapper;
         this.schoolEventTypeRepository = schoolEventTypeRepository;
         this.personRepository = personRepository;
         this.personMapper = personMapper;
         this.studentRepository = studentRepository;
+        this.studentMapper = studentMapper;
     }
 
     @Transactional
     public SchoolEventResponse create(SchoolEventRequest request) {
-        Person person = personRepository.findByCpf(request.cpf());
-        SchoolEventType schoolEventType = schoolEventTypeRepository.findById(request.eventTypeId()).get();
-        if (person == null || schoolEventType == null) {
-            throw new EntityNotFoundException("Creator or event type not found");
+        Person person = personRepository.findByCpf(request.cpf())
+                .orElseThrow(() -> new EntityNotFoundException("Person not found"));
+        SchoolEventType schoolEventType = schoolEventTypeRepository.findById(request.eventTypeId())
+                .orElseThrow(() -> new EntityNotFoundException("School event type not found"));
+        Student student = null;
+        if (request.studentId() != null) {
+            student = studentRepository.findById(request.studentId())
+                    .orElseThrow(() -> new EntityNotFoundException("Student not found"));
         }
         SchoolEvent schoolEvent = SchoolEvent.builder()
                 .name(request.name())
@@ -54,6 +62,7 @@ public class SchoolEventService extends BaseService<SchoolEvent, Long, SchoolEve
                 .eventDate(request.eventDate())
                 .createdBy(person)
                 .eventType(schoolEventType)
+                .student(student)
                 .build();
         repository.save(schoolEvent);
         return toResponse(schoolEvent);
@@ -63,22 +72,26 @@ public class SchoolEventService extends BaseService<SchoolEvent, Long, SchoolEve
     protected SchoolEvent toEntity(SchoolEventRequest request) {
         SchoolEventType schoolEventType = schoolEventTypeRepository.findById(request.eventTypeId())
                 .orElseThrow(() -> new EntityNotFoundException("School event type not found"));
-        Student student = studentRepository.findByCpf(request.cpf());
+        Student student = null;
+        if (request.studentId() != null) {
+            student = studentRepository.findById(request.studentId())
+                    .orElseThrow(() -> new EntityNotFoundException("Student not found"));
+        }
         return mapper.toEntity(request, schoolEventType, student);
     }
 
     @Override
     protected SchoolEventResponse toResponse(SchoolEvent entity) {
         PersonResponse createdBy = personMapper.toResponse(entity.getCreatedBy(), null);
-        return mapper.toResponse(entity, createdBy);
+        StudentResponse student = studentMapper.toResponse(entity.getStudent());
+        return mapper.toResponse(entity, createdBy, student
+        );
     }
 
     @Override
     protected void updateEntity(SchoolEvent entity, SchoolEventRequest request) {
-        Person person = personRepository.findByCpf(request.cpf());
-        if (person == null) {
-            throw new EntityNotFoundException("Creator not found");
-        }
+        Person person = personRepository.findByCpf(request.cpf())
+                .orElseThrow(() -> new EntityNotFoundException("Creator not found"));
         entity.setName(request.name());
         entity.setDescription(request.description());
         entity.setCreatedBy(person);

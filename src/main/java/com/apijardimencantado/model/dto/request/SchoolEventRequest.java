@@ -1,6 +1,9 @@
 package com.apijardimencantado.model.dto.request;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 
 public record SchoolEventRequest (
@@ -10,11 +13,15 @@ public record SchoolEventRequest (
          @NotBlank(message = "A descrição é obrigatória")
          String description,
 
-         @NotBlank(message = "A data do evento é obrigatória")
+         @NotNull(message = "A data do evento é obrigatória")
          LocalDateTime eventDate,
 
          @NotBlank(message = "O criador da ocorrênica é obrigatório")
          String cpf,
-         @NotBlank(message = "O tipo de ocorrência é obrigatório")
+
+         @Nullable
+         Long studentId,
+
+         @NotNull(message = "O tipo de ocorrência é obrigatório")
          Long eventTypeId
 ) {}

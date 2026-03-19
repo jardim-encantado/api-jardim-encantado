@@ -9,6 +9,7 @@ import com.apijardimencantado.mapper.StudentMapper;
 import com.apijardimencantado.repository.person.PersonRepository;
 import com.apijardimencantado.repository.student.EnrollmentRepository;
 import com.apijardimencantado.repository.student.StudentRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,8 @@ public class StudentService extends BaseService<Student, Long, StudentRequest, S
 
     @Override
     public StudentResponse create(StudentRequest request) {
-        Person person = personRepository.findByCpf(request.cpf());
+        Person person = personRepository.findByCpf(request.cpf())
+                .orElseThrow(() -> new EntityNotFoundException("Person not found"));
         if (studentRepository.findByCpf(request.cpf()) != null){
             throw new UnsupportedOperationException("Estudante já cadastrado");
         }
@@ -57,7 +59,8 @@ public class StudentService extends BaseService<Student, Long, StudentRequest, S
     @Override
     protected Student toEntity(StudentRequest request) {
         return Student.builder()
-                .person(personRepository.findByCpf(request.cpf()))
+                .person(personRepository.findByCpf(request.cpf())
+                        .orElseThrow(() -> new EntityNotFoundException("Person not found")))
                 .build();
     }
 

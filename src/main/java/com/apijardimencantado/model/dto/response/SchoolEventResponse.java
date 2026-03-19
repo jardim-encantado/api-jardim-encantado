@@ -1,6 +1,8 @@
 package com.apijardimencantado.model.dto.response;
 
 import com.apijardimencantado.model.database.SchoolEventType;
+import jakarta.annotation.Nullable;
+
 import java.time.LocalDateTime;
 public record SchoolEventResponse(
 
@@ -17,5 +19,8 @@ public record SchoolEventResponse(
 
         LocalDateTime updateDate,
 
-        SchoolEventType eventTypeId
+        SchoolEventTypeResponse eventTypeId,
+
+        @Nullable
+        StudentResponse student
 ) { }
