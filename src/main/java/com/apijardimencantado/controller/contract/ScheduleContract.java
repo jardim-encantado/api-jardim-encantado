@@ -1,8 +1,8 @@
 package com.apijardimencantado.controller.contract;
 
-import com.apijardimencantado.model.dto.ScheduleItemResponse;
-import com.apijardimencantado.model.dto.ScheduleRequest;
-import com.apijardimencantado.model.dto.ScheduleResponse;
+import com.apijardimencantado.model.dto.response.ScheduleItemResponse;
+import com.apijardimencantado.model.dto.request.ScheduleRequest;
+import com.apijardimencantado.model.dto.response.ScheduleResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

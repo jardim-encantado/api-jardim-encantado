@@ -1,4 +1,4 @@
-package com.apijardimencantado.model.dto;
+package com.apijardimencantado.model.dto.response;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;

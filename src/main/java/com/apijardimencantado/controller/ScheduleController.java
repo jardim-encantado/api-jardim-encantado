@@ -1,9 +1,9 @@
 package com.apijardimencantado.controller;
 
 import com.apijardimencantado.controller.contract.ScheduleContract;
-import com.apijardimencantado.model.dto.ScheduleItemResponse;
-import com.apijardimencantado.model.dto.ScheduleRequest;
-import com.apijardimencantado.model.dto.ScheduleResponse;
+import com.apijardimencantado.model.dto.response.ScheduleItemResponse;
+import com.apijardimencantado.model.dto.request.ScheduleRequest;
+import com.apijardimencantado.model.dto.response.ScheduleResponse;
 import com.apijardimencantado.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
