@@ -1,11 +1,13 @@
 package com.apijardimencantado.service;
 
+import com.apijardimencantado.mapper.AddressMapper;
 import com.apijardimencantado.model.database.Person;
 import com.apijardimencantado.model.database.Student;
 import com.apijardimencantado.model.database.enrollment.Enrollment;
 import com.apijardimencantado.model.dto.request.StudentRequest;
 import com.apijardimencantado.model.dto.response.StudentResponse;
 import com.apijardimencantado.mapper.StudentMapper;
+import com.apijardimencantado.repository.person.AddressRepository;
 import com.apijardimencantado.repository.person.PersonRepository;
 import com.apijardimencantado.repository.student.EnrollmentRepository;
 import com.apijardimencantado.repository.student.StudentRepository;
@@ -23,15 +25,19 @@ public class StudentService extends BaseService<Student, Long, StudentRequest, S
     private final StudentMapper mapper;
     private final StudentRepository studentRepository;
     private final PersonRepository personRepository;
+    private final AddressRepository addressRepository;
+    private final AddressMapper addressMapper;
 
     private final EnrollmentRepository enrollmentRepository;
 
-    public StudentService(StudentMapper mapper, StudentRepository studentRepository, PersonRepository personRepository, EnrollmentRepository enrollmentRepository) {
+    public StudentService(StudentMapper mapper, StudentRepository studentRepository, PersonRepository personRepository, EnrollmentRepository enrollmentRepository,  AddressRepository addressRepository, AddressMapper addressMapper) {
         super(studentRepository, "Student");
         this.mapper = mapper;
         this.studentRepository = studentRepository;
         this.personRepository = personRepository;
         this.enrollmentRepository = enrollmentRepository;
+        this.addressRepository = addressRepository;
+        this.addressMapper = addressMapper;
     }
 
     @Override
@@ -66,7 +72,9 @@ public class StudentService extends BaseService<Student, Long, StudentRequest, S
 
     @Override
     protected StudentResponse toResponse(Student entity) {
-        return mapper.toResponse(entity);
+        return mapper.toResponse(entity,
+                addressMapper.toResponse(
+                        addressRepository.findAddressByPerson_Id(entity.getPerson().getId())));
     }
 
     @Override
@@ -76,14 +84,14 @@ public class StudentService extends BaseService<Student, Long, StudentRequest, S
 
     public StudentResponse getById(Long id) {
         Student student = getModelById(id);
-        return mapper.toResponse(student);
+        return toResponse(student);
     }
 
     private StudentResponse changeEnrollment(Long studentId, Consumer<Enrollment> action) {
         Student student = getModelById(studentId);
         action.accept(student.getEnrollment());
         studentRepository.save(student);
-        return mapper.toResponse(student);
+        return toResponse(student);
     }
 
     public StudentResponse enroll(Long studentId) {

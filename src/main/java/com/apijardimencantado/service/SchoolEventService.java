@@ -1,11 +1,10 @@
 package com.apijardimencantado.service;
 
+import com.apijardimencantado.mapper.AddressMapper;
 import com.apijardimencantado.mapper.StudentMapper;
-import com.apijardimencantado.model.database.Person;
-import com.apijardimencantado.model.database.SchoolEvent;
-import com.apijardimencantado.model.database.SchoolEventType;
-import com.apijardimencantado.model.database.Student;
+import com.apijardimencantado.model.database.*;
 import com.apijardimencantado.model.dto.request.SchoolEventRequest;
+import com.apijardimencantado.model.dto.response.AddressResponse;
 import com.apijardimencantado.model.dto.response.PersonResponse;
 import com.apijardimencantado.model.dto.response.SchoolEventResponse;
 import com.apijardimencantado.mapper.PersonMapper;
@@ -13,6 +12,7 @@ import com.apijardimencantado.mapper.SchoolEventMapper;
 import com.apijardimencantado.model.dto.response.StudentResponse;
 import com.apijardimencantado.repository.SchoolEventRepository;
 import com.apijardimencantado.repository.SchoolEventTypeRepository;
+import com.apijardimencantado.repository.person.AddressRepository;
 import com.apijardimencantado.repository.person.PersonRepository;
 import com.apijardimencantado.repository.student.StudentRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -31,6 +31,8 @@ public class SchoolEventService extends BaseService<SchoolEvent, Long, SchoolEve
     private final PersonMapper personMapper;
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
+    private final AddressMapper addressMapper;
+    private final AddressRepository addressRepository;
 
 
     public SchoolEventService(SchoolEventRepository schoolEventRepository,
@@ -38,7 +40,10 @@ public class SchoolEventService extends BaseService<SchoolEvent, Long, SchoolEve
                               SchoolEventTypeRepository schoolEventTypeRepository,
                               PersonRepository personRepository,
                               PersonMapper personMapper,
-                              StudentRepository studentRepository, StudentMapper studentMapper) {
+                              StudentRepository studentRepository,
+                              StudentMapper studentMapper,
+                              AddressMapper addressMapper,
+                              AddressRepository addressRepository) {
         super(schoolEventRepository, "SchoolEvent");
         this.mapper = schoolEventMapper;
         this.schoolEventTypeRepository = schoolEventTypeRepository;
@@ -47,6 +52,8 @@ public class SchoolEventService extends BaseService<SchoolEvent, Long, SchoolEve
         this.studentRepository = studentRepository;
         this.studentMapper = studentMapper;
         this.repository = schoolEventRepository;
+        this.addressMapper = addressMapper;
+        this.addressRepository = addressRepository;
     }
 
     @Transactional
@@ -93,7 +100,7 @@ public class SchoolEventService extends BaseService<SchoolEvent, Long, SchoolEve
     @Override
     protected SchoolEventResponse toResponse(SchoolEvent entity) {
         PersonResponse createdBy = personMapper.toResponse(entity.getCreatedBy(), null);
-        StudentResponse student = studentMapper.toResponse(entity.getStudent());
+        StudentResponse student = studentMapper.toResponse(entity.getStudent(), getAddress(entity.getStudent().getPerson().getId()));
         return mapper.toResponse(entity, createdBy, student
         );
     }
@@ -107,5 +114,10 @@ public class SchoolEventService extends BaseService<SchoolEvent, Long, SchoolEve
         entity.setCreatedBy(person);
         entity.setEventDate(request.eventDate());
         repository.save(entity);
+    }
+
+    private AddressResponse getAddress(Long personId) {
+        return addressMapper.toResponse(
+                addressRepository.findAddressByPerson_Id(personId));
     }
 }

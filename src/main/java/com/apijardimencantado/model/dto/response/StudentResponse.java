@@ -11,5 +11,6 @@ public record StudentResponse(
         String photoUrl,
         String phoneNumber,
         String cpf,
-        Enrollment enrollment
+        Enrollment enrollment,
+        AddressResponse address
 ) { }

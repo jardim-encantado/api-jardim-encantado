@@ -2,6 +2,7 @@ package com.apijardimencantado.mapper;
 
 import com.apijardimencantado.model.database.Student;
 import com.apijardimencantado.model.dto.request.StudentRequest;
+import com.apijardimencantado.model.dto.response.AddressResponse;
 import com.apijardimencantado.model.dto.response.StudentResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -19,5 +20,6 @@ public interface StudentMapper {
     @Mapping(target = "phoneNumber", source = "student.person.phoneNumber")
     @Mapping(target = "photoUrl", source = "student.person.photoUrl")
     @Mapping(target = "cpf", source = "student.person.cpf")
-    StudentResponse toResponse(Student student);
+    @Mapping(target = "address", source = "address")
+    StudentResponse toResponse(Student student, AddressResponse address);
 }
