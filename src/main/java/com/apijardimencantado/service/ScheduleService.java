@@ -5,9 +5,9 @@ import com.apijardimencantado.model.database.ClassroomGroup;
 import com.apijardimencantado.model.database.ClassroomGroupStudent;
 import com.apijardimencantado.model.database.Schedule;
 import com.apijardimencantado.model.database.ScheduleItem;
-import com.apijardimencantado.model.dto.ScheduleItemResponseDto;
-import com.apijardimencantado.model.dto.ScheduleRequestDto;
-import com.apijardimencantado.model.dto.ScheduleResponseDto;
+import com.apijardimencantado.model.dto.ScheduleItemResponse;
+import com.apijardimencantado.model.dto.ScheduleRequest;
+import com.apijardimencantado.model.dto.ScheduleResponse;
 import com.apijardimencantado.repository.ScheduleItemRepository;
 import com.apijardimencantado.repository.ScheduleRepository;
 import com.apijardimencantado.repository.classroom.ClassroomGroupRepository;
@@ -29,7 +29,7 @@ public class ScheduleService {
     private final ClassroomGroupStudentRepository classroomGroupStudentRepository;
     private final ScheduleMapper mapper;
 
-    public ScheduleResponseDto create(ScheduleRequestDto dto) {
+    public ScheduleResponse create(ScheduleRequest dto) {
         Schedule schedule = mapper.toEntity(dto);
         scheduleRepository.save(schedule);
 
@@ -45,14 +45,14 @@ public class ScheduleService {
         return mapper.toResponse(schedule);
     }
 
-    public ScheduleResponseDto getByGroup(Long groupId) {
+    public ScheduleResponse getByGroup(Long groupId) {
         Schedule schedule = scheduleRepository.findByGroup_GroupId(groupId)
                 .orElseThrow(() -> new RuntimeException("Grade não encontrada"));
 
         return mapper.toResponse(schedule);
     }
 
-    public ScheduleResponseDto getByStudent(Long studentId) {
+    public ScheduleResponse getByStudent(Long studentId) {
 
         ClassroomGroupStudent relation = classroomGroupStudentRepository
                 .findByStudent_Id(studentId)
@@ -67,7 +67,7 @@ public class ScheduleService {
         return mapper.toResponse(schedule);
     }
 
-    public List<ScheduleItemResponseDto> getByTeacher(Long teacherId) {
+    public List<ScheduleItemResponse> getByTeacher(Long teacherId) {
         List<ScheduleItem> items = itemRepository.findByTeacher_Id(teacherId);
         return items.stream()
                 .map(mapper::toItemResponse)
@@ -76,7 +76,7 @@ public class ScheduleService {
 
 
 
-    public ScheduleResponseDto update(Long id, ScheduleRequestDto dto) {
+    public ScheduleResponse update(Long id, ScheduleRequest dto) {
 
         Schedule schedule = scheduleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Grade não encontrada"));

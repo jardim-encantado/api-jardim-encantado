@@ -3,10 +3,10 @@ package com.apijardimencantado.mapper;
 import com.apijardimencantado.model.database.Schedule;
 import com.apijardimencantado.model.database.ScheduleItem;
 import com.apijardimencantado.model.database.Teacher;
-import com.apijardimencantado.model.dto.ScheduleItemRequestDto;
-import com.apijardimencantado.model.dto.ScheduleItemResponseDto;
-import com.apijardimencantado.model.dto.ScheduleRequestDto;
-import com.apijardimencantado.model.dto.ScheduleResponseDto;
+import com.apijardimencantado.model.dto.ScheduleItemRequest;
+import com.apijardimencantado.model.dto.ScheduleItemResponse;
+import com.apijardimencantado.model.dto.ScheduleRequest;
+import com.apijardimencantado.model.dto.ScheduleResponse;
 import com.apijardimencantado.repository.classroom.ClassroomGroupRepository;
 import com.apijardimencantado.repository.teacher.StudySubjectRepository;
 import com.apijardimencantado.repository.teacher.TeacherRepository;
@@ -21,7 +21,7 @@ public class ScheduleMapper {
     private final TeacherRepository teacherRepository;
     private final StudySubjectRepository subjectRepository;
 
-    public Schedule toEntity(ScheduleRequestDto dto) {
+    public Schedule toEntity(ScheduleRequest dto) {
         Schedule schedule = new Schedule();
 
         schedule.setGroup(
@@ -35,7 +35,7 @@ public class ScheduleMapper {
         return schedule;
     }
 
-    public ScheduleItem toItemEntity(ScheduleItemRequestDto dto) {
+    public ScheduleItem toItemEntity(ScheduleItemRequest dto) {
         ScheduleItem item = new ScheduleItem();
 
         item.setDayOfWeek(dto.dayOfWeek());
@@ -55,8 +55,8 @@ public class ScheduleMapper {
         return item;
     }
 
-    public ScheduleResponseDto toResponse(Schedule schedule) {
-        return new ScheduleResponseDto(
+    public ScheduleResponse toResponse(Schedule schedule) {
+        return new ScheduleResponse(
                 schedule.getScheduleId(),
                 schedule.getGroup().getGroupId(),
                 schedule.getGroup().getName(),
@@ -70,8 +70,8 @@ public class ScheduleMapper {
         );
     }
 
-    public ScheduleItemResponseDto toItemResponse(ScheduleItem item) {
-        return new ScheduleItemResponseDto(
+    public ScheduleItemResponse toItemResponse(ScheduleItem item) {
+        return new ScheduleItemResponse(
                 item.getScheduleItemId(),
                 item.getDayOfWeek(),
                 getDayName(item.getDayOfWeek()),

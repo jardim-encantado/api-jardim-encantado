@@ -4,13 +4,13 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-public record ScheduleResponseDto(
+public record ScheduleResponse(
      Long scheduleId,
      Long groupId,
      String groupName,
      LocalTime startTime,
      LocalTime endTime,
-     List<ScheduleItemResponseDto> items,
+     List<ScheduleItemResponse> items,
      LocalDateTime createDate,
      LocalDateTime updateDate
 ) {

@@ -2,7 +2,7 @@ package com.apijardimencantado.model.dto;
 
 import java.time.LocalTime;
 
-public record ScheduleItemRequestDto(
+public record ScheduleItemRequest(
          Integer dayOfWeek,
          LocalTime startTime,
          LocalTime endTime,

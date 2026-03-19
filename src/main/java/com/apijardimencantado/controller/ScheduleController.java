@@ -1,9 +1,9 @@
 package com.apijardimencantado.controller;
 
 import com.apijardimencantado.controller.contract.ScheduleContract;
-import com.apijardimencantado.model.dto.ScheduleItemResponseDto;
-import com.apijardimencantado.model.dto.ScheduleRequestDto;
-import com.apijardimencantado.model.dto.ScheduleResponseDto;
+import com.apijardimencantado.model.dto.ScheduleItemResponse;
+import com.apijardimencantado.model.dto.ScheduleRequest;
+import com.apijardimencantado.model.dto.ScheduleResponse;
 import com.apijardimencantado.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,27 +18,27 @@ public class ScheduleController implements ScheduleContract {
     private final ScheduleService service;
 
     @Override
-    public ResponseEntity<ScheduleResponseDto> create(ScheduleRequestDto dto) {
+    public ResponseEntity<ScheduleResponse> create(ScheduleRequest dto) {
         return ResponseEntity.ok(service.create(dto));
     }
 
     @Override
-    public ResponseEntity<ScheduleResponseDto> getByGroup(Long groupId) {
+    public ResponseEntity<ScheduleResponse> getByGroup(Long groupId) {
         return ResponseEntity.ok(service.getByGroup(groupId));
     }
 
     @Override
-    public ResponseEntity<ScheduleResponseDto> getByStudent(Long studentId) {
+    public ResponseEntity<ScheduleResponse> getByStudent(Long studentId) {
         return ResponseEntity.ok(service.getByStudent(studentId));
     }
 
     @Override
-    public ResponseEntity<List<ScheduleItemResponseDto>> getByTeacher(Long teacherId) {
+    public ResponseEntity<List<ScheduleItemResponse>> getByTeacher(Long teacherId) {
         return ResponseEntity.ok(service.getByTeacher(teacherId));
     }
 
     @Override
-    public ResponseEntity<ScheduleResponseDto> update(Long id, ScheduleRequestDto dto) {
+    public ResponseEntity<ScheduleResponse> update(Long id, ScheduleRequest dto) {
         return ResponseEntity.ok(service.update(id, dto));
     }
 
